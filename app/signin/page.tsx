@@ -83,7 +83,6 @@ export default function CardDemo() {
                 id="email"
                 type="email"
                 placeholder="hello@example.com"
-                className="bg-gray-100 text-black"
                 {...register("email", { required: "Email is required" })}
               />
             </div>
@@ -95,7 +94,6 @@ export default function CardDemo() {
               <Input
                 id="password"
                 type="password"
-                className="bg-gray-100 text-black"
                 placeholder="qwerty"
                 {...register("password", { required: "Password is required" })}
               />
@@ -103,18 +101,14 @@ export default function CardDemo() {
 
             {error && <p className="text-red-500 text-sm">{error}</p>}
 
-            <Button
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? "Logging in..." : "Login"}
-            </Button>
+              <Button type="submit"  className="w-full bg-white text-black hover:bg-gray-200" disabled={loading}>
+                  Login
+                </Button>
           </form>
         </CardContent>
 
         <CardFooter className="flex-col gap-2">
           <Button
-            variant="outline"
             className="w-full"
             
             onClick={handleGoogleLogin}
