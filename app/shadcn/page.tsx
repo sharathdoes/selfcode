@@ -16,22 +16,22 @@ export default function SheetDemo() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button variant="outline">Set Groq key</Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
+          <SheetTitle>Add Your Groq Key</SheetTitle>
           <SheetDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
+            This key will be used to access the Groq API.
           </SheetDescription>
         </SheetHeader>
         <div className="grid flex-1 auto-rows-min gap-6 px-4">
           <div className="grid gap-3">
-            <Label htmlFor="sheet-demo-name">Name</Label>
+            <Label htmlFor="sheet-demo-name">API Key</Label>
             <Input id="sheet-demo-name" defaultValue="Pedro Duarte" />
           </div>
           <div className="grid gap-3">
-            <Label htmlFor="sheet-demo-username">Username</Label>
+            <Label htmlFor="sheet-demo-username">Select Model</Label>
             <Input id="sheet-demo-username" defaultValue="@peduarte" />
           </div>
         </div>

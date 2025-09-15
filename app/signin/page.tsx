@@ -15,13 +15,14 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
+import { useRouter } from "next/navigation";
 type LoginFormValues = {
   email: string;
   password: string;
 };
 
 export default function CardDemo() {
+  const router = useRouter();
   const { register, handleSubmit } = useForm<LoginFormValues>();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -35,31 +36,35 @@ export default function CardDemo() {
       email: data.email,
       password: data.password,
     });
+    if (!res?.error) {
+      // force a full reload so the browser reads the new session cookie
+      window.location.assign("/dashboard");
+    } else {
+      setError("Invalid email or password");
+    }
 
     setLoading(false);
-
-    if (res?.error) {
-      setError("Invalid email or password");
-    } else {
-      window.location.href = "/dashboard";
-    }
   };
 
   const handleGoogleLogin = async () => {
-    await signIn("google", { callbackUrl: "/dashboard" })
+    await signIn("google", { callbackUrl: "/dashboard" });
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen">
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>
+            <div className="flex justify-between">
+            <a>Login to your account</a>{" "}
+            
+            </div>
+          </CardTitle>
           <CardDescription>
             Enter your email below to login to your account
           </CardDescription>
           <CardAction>
             <Button
-              variant="link"
               onClick={() => (window.location.href = "/signup")}
             >
               Sign Up
@@ -68,13 +73,17 @@ export default function CardDemo() {
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-6"
+          >
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder="hello@example.com"
+                className="bg-gray-100 text-black"
                 {...register("email", { required: "Email is required" })}
               />
             </div>
@@ -82,16 +91,11 @@ export default function CardDemo() {
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
-                <a
-                  href="#"
-                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                >
-                  Forgot your password?
-                </a>
               </div>
               <Input
                 id="password"
                 type="password"
+                className="bg-gray-100 text-black"
                 placeholder="qwerty"
                 {...register("password", { required: "Password is required" })}
               />
@@ -99,14 +103,22 @@ export default function CardDemo() {
 
             {error && <p className="text-red-500 text-sm">{error}</p>}
 
-            <Button type="submit" className="bg-white text-black w-full" disabled={loading}>
+            <Button
+              type="submit"
+              disabled={loading}
+            >
               {loading ? "Logging in..." : "Login"}
             </Button>
           </form>
         </CardContent>
 
         <CardFooter className="flex-col gap-2">
-          <Button variant="outline" className="w-full" onClick={handleGoogleLogin}>
+          <Button
+            variant="outline"
+            className="w-full"
+            
+            onClick={handleGoogleLogin}
+          >
             Login with Google
           </Button>
         </CardFooter>
