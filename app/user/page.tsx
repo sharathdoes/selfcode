@@ -1,17 +1,36 @@
 'use client'
-import {useSession, signOut} from "next-auth/react"
-import { Button } from "@/components/ui/button";
+import {useRouter} from 'next/navigation';
+import {useSession} from 'next-auth/react'
+import {useEffect} from 'react'
+import {signOut} from 'next-auth/react'
+import { Button } from '@/components/ui/button';
+type props={
+  username:string | null | undefined;
+}
+function Welcome(data : props){
+  return(
+    <div>Welcome {data.username}</div>
+  )
+}
+
 export default function User(){
-    const {data:session} = useSession();
-    if(session){
-        return(
-            <div className="flex min-h-screen items-center justify-center ">
-                <h1>Welcome, {session.user?.name}!</h1>
-                <Button onClick={()=>signOut()} className="p-2 m-2 on hover:bg-amber-50 bg-white text-black">SignOut</Button>
-           
-        
-    
-            </div>
-        )
+  const router=useRouter();
+  const {data : session, status}=useSession();
+
+ useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/signin');
     }
+  }, [status, router]);
+
+  if (status === 'loading') {
+    return <p>Loading...</p>;
+  }
+    return (
+      <div>
+        <Welcome username={session?.user?.name} />
+        <Button onClick={()=>{signOut()}}>SignOut</Button>
+      </div>
+    )
+  
 }
