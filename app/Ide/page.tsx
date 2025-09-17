@@ -1,12 +1,17 @@
 import Ide from './compiler'
+import Description from './description'
+import Header from "@/components/Header";
 export default function IdePage() {
   return (
-    <div className=" flex ">
-      <div  className="w-[50%] h-screen"> left side description</div>
-      <div className="w-[50%] h-screen border-l flex flex-col">
-        <div className="h-[70%]"><Ide/></div>
-        <div className="h-[30%]">testcases</div>
+    <div >
+      <Header></Header>
+      <div className=" flex ">
+      <div  className="w-[50%] h-screen"><Description/></div>
+      <div className="w-[50%] h-screen border-l">
+            <Ide/>
       </div>
     </div>
+    </div>
+    
   );
 }
