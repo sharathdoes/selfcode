@@ -14,6 +14,7 @@ model User {
   emailVerified DateTime?
   image         String?
   groqkey       String?   
+  selectedModel String?   // e.g., "gpt-4", "gpt-3.5-turbo"
   password      String?   // For credentials login
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
