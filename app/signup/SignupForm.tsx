@@ -16,7 +16,7 @@ type SignupFormValues = {
 };
 
 type Props = {
-  signupAction: (data: { name: string; email: string; password: string }) => Promise<any>;
+  signupAction: (data: { name: string; email: string; password: string }) => Promise<{ name: string | null; id: string; email: string | null; emailVerified: Date | null; image: string | null; groqkey: string | null; selectedModel: string | null; password: string | null; createdAt: Date; updatedAt: Date; }>;
 };
 
 export default function SignupForm({ signupAction }: Props) {
@@ -38,8 +38,8 @@ export default function SignupForm({ signupAction }: Props) {
     try {
       await signupAction({ name: data.name, email: data.email, password: data.password });
       router.push("/signin");
-    } catch (err: any) {
-      setError(err.message || "Something went wrong");
+    } catch (err: unknown) {
+      setError("Something went wrong");
     } finally {
       setLoading(false);
     }
