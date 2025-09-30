@@ -3,6 +3,7 @@
 import "./globals.css";
 import localFont from "next/font/local";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "@/components/ui/sonner"
 
 const outfit = localFont({
   src: "../fonts/Outfit/Outfit-VariableFont_wght.ttf",
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
         <body className={`${outfit.className} ${outfit.variable}`}>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>{children}   <Toaster /> </SessionProvider>
       </body>
     </html>
   );

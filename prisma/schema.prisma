@@ -20,6 +20,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   
   accounts      Account[]
+  feedback      Feedback[]
 }
 
 model Account {
@@ -39,4 +40,15 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  userId    String
+  feedback   String   @db.Text
+  anonymous Boolean  @default(false)
+  rating   Int?     // e.g., 1 to 5
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
