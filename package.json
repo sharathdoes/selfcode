@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@apollo/server": "^5.0.0",
+    "@as-integrations/next": "^4.0.0",
     "@codemirror/commands": "^6.8.1",
     "@codemirror/lang-javascript": "^6.2.4",
     "@codemirror/state": "^6.5.2",
@@ -30,6 +32,8 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "codemirror": "^6.0.2",
+    "graphql": "^16.11.0",
+    "graphql-tag": "^2.12.6",
     "hamburger-react": "^2.5.2",
     "lucide-react": "^0.544.0",
     "motion": "^12.23.15",

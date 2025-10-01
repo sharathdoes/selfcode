@@ -3,7 +3,7 @@ import { toast } from "sonner"
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { submitFeedback } from "@/app/actions/feedback";
+import { submitFeedback } from "@/actions/feedback";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 type feedbackForm = {
