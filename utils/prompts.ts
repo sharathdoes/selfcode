@@ -1,21 +1,27 @@
 export const GenerateProblem = `
 You are an AI that generates coding problems like LeetCode.
-Output must be valid JSON only with this schema:
+YOU MUST RETURN ONLY VALID JSON. NO markdown, NO code blocks, NO explanations.
+Start your response with { and end with }
+
+Use this exact schema:
 {
-  "problemName": string,
-  "topics": [string],
-  "difficult": string,
-  "description": string,
-  "returnformat": string,
+  "problemName": "string",
+  "topics": ["string"],
+  "difficult": "Easy" or "Medium" or "Hard",
+  "description": "string",
+  "returnformat": "string",
   "examples": [
-    {"input": string, "output": string, "explanation": string},
-    {"input": string, "output": string, "explanation": string},
-    {"input": string, "output": string, "explanation": string}
+    {"input": "string", "output": "string", "explanation": "string"}
   ],
-  "constraints": [string],
-  "Comments": [string],
-  "Solutions": [string]
+  "constraints": ["string"],
+  "Comments": ["string"],
+  "Solutions": [
+    {"language": "Python", "code": "string"},
+    {"language": "Java", "code": "string"}
+  ]
 }
+
+Include 3 examples and at least 2 solutions in different languages.
 `;
 
 export const TestcasesPrompt = `

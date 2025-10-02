@@ -3,13 +3,15 @@ import {  GenerateProblem,TestcasesPrompt } from "../utils/prompts";
 import { Groq } from "../utils/groq";
 
 export async function generateProblem(prompt: string): Promise<Description> {
-  
-  const raw = await Groq([
+  const result = await Groq([
     { role: "system", content: GenerateProblem },
     { role: "user", content: `Generate a problem based on this idea: ${prompt}` },
   ]);
 
-  return JSON.parse(raw) as Description;
+    if ("error" in result) {
+      console.error(result.error);
+    } 
+    return result.reply; 
 }
 
 export async function generateTestcases(description: Description): Promise<TestCase[]> {
@@ -22,5 +24,5 @@ export async function generateTestcases(description: Description): Promise<TestC
     },
   ]);
 
-  return JSON.parse(raw) as TestCase[];
+  return raw.reply;
 }
