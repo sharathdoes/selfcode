@@ -1,5 +1,5 @@
 "use client";
-import Execute from "@/app/utils/piston";
+import Execute from "@/utils/piston";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Execute from "@/app/utils/piston";
+import Execute from "@/utils/piston";
 import CodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { Button } from "@/components/ui/button";
