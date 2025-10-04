@@ -35,7 +35,7 @@ export default function CardDemo() {
       password: data.password,
     });
     if (!res?.error) {
-      window.location.assign("/user");
+      window.location.assign("/home");
     } else {
       setError("Invalid email or password");
     }
@@ -44,7 +44,7 @@ export default function CardDemo() {
   };
 
   const handleGoogleLogin = async () => {
-    await signIn("google", { callbackUrl: "/user" });
+    await signIn("google", { callbackUrl: "/home" });
   };
 
   return (

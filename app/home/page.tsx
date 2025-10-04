@@ -18,7 +18,7 @@ export default function Home() {
       const res = await generateProblem(data.prompt);
       const parsedProblem: Description = typeof res === "string" ? JSON.parse(res) : res;
       const encoded = encodeURIComponent(JSON.stringify(parsedProblem));
-      router.push(`/problem?data=${encoded}`);
+      router.push(`/Ide?data=${encoded}`);
     } catch (error) {
       console.error("Error generating problem:", error);
     } finally {
@@ -29,7 +29,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8">Problem Generator</h1>
         <div className="flex flex-col gap-8">
           <div className="flex items-center justify-center">
             <div className="flex flex-col gap-4 w-full max-w-2xl">
@@ -40,7 +39,7 @@ export default function Home() {
               />
               <Button
                 onClick={handleSubmit(Groqcalls)}
-                className="rounded-lg p-2 bg-blue-600 hover:bg-blue-700"
+                className="rounded-lg p-2 "
                 disabled={loading}
               >
                 {loading ? "Generating..." : "Generate Problem"}
