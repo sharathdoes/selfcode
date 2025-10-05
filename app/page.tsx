@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(()=>{
     if(status==="authenticated"){
-        router.push('/user');
+        router.push('/home');
     }
   },[status]);
         if(status==="loading"){
