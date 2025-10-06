@@ -6,13 +6,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { generateProblem } from "@/actions/groq";
 import { Description } from "@/utils/types";
 import { useRouter } from "next/navigation";
-
+  type promptData = {
+  prompt: string;
+}
 export default function Home() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<promptData>();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const Groqcalls = async (data: any) => {
+  const Groqcalls = async (data: promptData) => {
     setLoading(true);
     try {
       const res = await generateProblem(data.prompt);
