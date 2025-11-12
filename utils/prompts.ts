@@ -30,3 +30,21 @@ Given 3 examples of a problem, generate 7 more diverse and valid testcases.
 Do NOT repeat the examples. Ensure correctness.
 Output JSON array of { "input": string, "output": string } length 7.
 `;
+
+export const models = [
+        { id: "gemma2-9b-it", name: "Gemma 2 9B", provider: "Google" },
+        {
+            id: "llama-3.3-70b-versatile",
+            name: "Llama 3.3 70B Versatile",
+            provider: "Meta",
+        },
+        {
+            id: "llama-3.1-8b-instant",
+            name: "Llama 3.1 8B Instant",
+            provider: "Meta",
+        },
+        { id: "llama-guard-3-8b", name: "Llama Guard 3 8B", provider: "Meta" },
+        { id: "llama3-70b-8192", name: "Llama 3 70B", provider: "Meta" },
+        { id: "llama3-8b-8192", name: "Llama 3 8B", provider: "Meta" },
+        { id: "mixtral-8x7b-32768", name: "Mixtral 8x7B", provider: "Mistral" },
+    ];

@@ -28,9 +28,11 @@ export default function Feedback() {
   return (
     <div className="flex flex-col bg-[#0a0a0a] justify-center items-center h-screen ">
         <div className="w-full max-w-lg items-center justify-center  flex flex-col py-12   rounded-lg shadow-2xl ">
-        <div className="text-3xl mr-4">We value your feedback</div>
+        {/* <div className="text-2xl mr-4">We value your feedback</div> */}
       <form  className="flex flex-col "onSubmit={handleSubmit(submitF)}>
+          <p>Feedback:</p>
         <div className="flex gap-4 items-center my-4">
+
          <p>Rating:</p>
           {ratings.map((r) => {
             return (
@@ -48,7 +50,6 @@ export default function Feedback() {
             
           })}
         </div>
-        <p>Feedback:</p>
         <div className="flex  rounded-lg">
             
         <Textarea
