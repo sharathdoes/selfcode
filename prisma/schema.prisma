@@ -11,35 +11,78 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
+  password      String?   // For credentials login
   emailVerified DateTime?
   image         String?
   groqkey       String?   
-  selectedModel String?   // e.g., "gpt-4", "gpt-3.5-turbo"
-  password      String?   // For credentials login
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  
-  accounts      Account[]
+  Contests  Contest[]  @relation("Creator")
+
   feedback      Feedback[]
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Contest {
+  id             String      @id @default(cuid())
+  title          String
+  description    String
+  topics         String[]    @db.VarChar(191)
+  difficulty     String
+  startTime      DateTime
+  endTime        DateTime
+  duration       Int
+  isPublic       Boolean     @default(true)
+  passwordHash   String?     
+  createdById    String
+  createdBy      User        @relation(fields: [createdById], references: [id], name: "Creator")
+  problems       Problem[]
+  resultsVisible Boolean     @default(false)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  results        CreatorResult[]
+}
 
-  @@unique([provider, providerAccountId])
+model Problem {
+  id               String   @id @default(cuid())
+  contestId        String
+  contest          Contest  @relation(fields: [contestId], references: [id])
+  problemName      String
+  topics           String[]
+  difficult        String
+  description      String   @db.Text
+  returnformat     String?
+  examples         Json
+  constraints      String[]
+  comments         String[]
+  solutions        Json
+  testcases        Json     
+  createdAt        DateTime @default(now())
+}
+
+model CreatorResult {
+  id          String        @id @default(cuid())
+  contestId   String
+  contest     Contest       @relation(fields: [contestId], references: [id])
+  userId      String?       
+  username    String        
+  score       Int
+  solvedCount Int
+  details     Json?         // per problem verdicts summary
+  submissions Submission[]  // relation to all code submissions
+  createdAt   DateTime      @default(now())
+}
+
+model Submission {
+  id          String   @id @default(cuid())
+  resultId    String
+  result      CreatorResult @relation(fields: [resultId], references: [id])
+  problemId   String
+  language    String
+  code        String   @db.Text
+  status      String   // accepted, wrong_answer, etc.
+  timeTakenMs Int?
+  submittedAt DateTime @default(now())
 }
 
 model Feedback {

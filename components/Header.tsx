@@ -1,29 +1,5 @@
 "use client";
-import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import { signOut } from "next-auth/react";
 import {
@@ -34,51 +10,79 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSession } from "next-auth/react";
-
-export default function Header() {
- 
-  const models = [
-    { id: "gemma2-9b-it", name: "Gemma 2 9B", provider: "Google" },
-    {
-      id: "llama-3.3-70b-versatile",
-      name: "Llama 3.3 70B Versatile",
-      provider: "Meta",
-    },
-    {
-      id: "llama-3.1-8b-instant",
-      name: "Llama 3.1 8B Instant",
-      provider: "Meta",
-    },
-    { id: "llama-guard-3-8b", name: "Llama Guard 3 8B", provider: "Meta" },
-    { id: "llama3-70b-8192", name: "Llama 3 70B", provider: "Meta" },
-    { id: "llama3-8b-8192", name: "Llama 3 8B", provider: "Meta" },
-    { id: "mixtral-8x7b-32768", name: "Mixtral 8x7B", provider: "Mistral" },
-  ];
-  const { data: session } = useSession();
+import { useRouter } from "next/navigation";
+import { IconBulb, IconInfoCircle } from "@tabler/icons-react";
+import { Button } from "@/components/ui/button";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+export function Header() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   return (
-    <div className="w-full h-12 flex  items-center justify-between px-4">
-      <h1>SelfCode</h1>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Avatar>
-            <AvatarImage src="https://avatars.githubusercontent.com/u/152028994?v=4"></AvatarImage>{" "}
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56" align="start">
-          <DropdownMenuItem>{session?.user?.email}</DropdownMenuItem>
+    <>
+      {status === "authenticated" ? (
+        <header className="border-b">
+          <div className="flex items-center  justify-around w-300 mx-auto p-2" >
+            <div className="flex items-center">
+              <div className="bg-black border border-zinc-800  rounded-md p-1 mr-2">
+                <IconBulb size={20} />
+              </div>
+              <p>Selfcode</p>
+            </div>
+             <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div > <Avatar>
+                <AvatarImage  src="https://avatars.githubusercontent.com/u/152028994?v=4"   />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar></div>
+              
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="start">
+              <DropdownMenuItem>{session?.user?.email}</DropdownMenuItem>
 
-          <DropdownMenuSeparator />
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSeparator />
 
-          <DropdownMenuItem>Upgrade Plan</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => signOut({ callbackUrl: "/signin" })}
+              >
+                Log out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          </div>
+         
+        </header>
+      ) : (
+        <header className="border-b">
+          <div className="flex items-center  justify-around w-300 mx-auto p-2">
+            <div className="flex items-center">
+              <div className="bg-black border border-zinc-800  rounded-md p-1 mr-2">
+                <IconBulb size={20} />
+              </div>
+              <p>Selfcode</p>
+            </div>
 
-          <DropdownMenuSeparator />
-
-          <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/signin" })}>
-            Log out
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+            <HoverCard>
+              <HoverCardTrigger>
+                <IconInfoCircle size={20} />
+              </HoverCardTrigger>
+              <HoverCardContent>
+                <div className="text-sm">
+                  selfcode helps you create your own contests with a prompt{" "}
+                  <button className="text-black mx-2 p-1 px-2 rounded-md bg-white ">
+                    sign in{" "}
+                  </button>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
+          </div>
+        </header>
+      )}
+    </>
   );
 }
