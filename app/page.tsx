@@ -1,8 +1,11 @@
-export default function Home() {
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { ModeToggle } from "../components/dark";
 
+export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center ">
-      hello world
-    </div>
+    <>
+    <Button variant="default">Hey</Button>
+    </>
   );
 }

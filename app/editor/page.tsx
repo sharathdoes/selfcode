@@ -12,16 +12,21 @@ export default function Cod() {
     console.log(res);
   };
   return (
-    <div className="flex h-screen flex-col">
-      <h1>Code Editor</h1>
-      <div> <CodeMirror
+    <div className="min-h-screen flex items-center justify-center">
+  <div className="w-[600px] flex flex-col items-center gap-4 p-6 rounded-5xl shadow-lg">
+    <h1 className="text-xl font-semibold">Code Editor</h1>
+      <CodeMirror
         value={code}
-        height="400px"
+        height="500px"
+        width="700px"
+        className="rounded-xl"
         theme={vscodeDark}
         onChange={(value) => setCode(value ?? "")}
       />
-      <Button  className=""onClick={handleRun}>Run</Button></div>
-      
-    </div>
+
+    <Button className="p-4" onClick={handleRun}>Run</Button>
+  </div>
+</div>
+
   );
 }

@@ -98,7 +98,7 @@ export default function CardDemo() {
 
             {error && <p className="text-red-500 text-sm">{error}</p>}
 
-              <Button type="submit"  className="w-full bg-white text-black hover:bg-gray-200" disabled={loading}>
+              <Button type="submit"  className="w-full " disabled={loading}>
                   Login
                 </Button>
           </form>

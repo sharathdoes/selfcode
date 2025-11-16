@@ -18,6 +18,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { ModeToggle } from "./dark";
 export function Header() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -27,8 +28,8 @@ export function Header() {
         <header className="border-b">
           <div className="flex items-center  justify-around w-300 mx-auto p-2" >
             <div className="flex items-center">
-              <div className="bg-black border border-zinc-800  rounded-md p-1 mr-2">
-                <IconBulb size={20} />
+              <div className="   rounded-md mr-2">
+                    <ModeToggle/>
               </div>
               <p>Selfcode</p>
             </div>
@@ -44,7 +45,7 @@ export function Header() {
               <DropdownMenuItem>{session?.user?.email}</DropdownMenuItem>
 
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push("/settings")}>Settings</DropdownMenuItem>
               <DropdownMenuSeparator />
 
               <DropdownMenuItem
@@ -61,8 +62,8 @@ export function Header() {
         <header className="border-b">
           <div className="flex items-center  justify-around w-300 mx-auto p-2">
             <div className="flex items-center">
-              <div className="bg-black border border-zinc-800  rounded-md p-1 mr-2">
-                <IconBulb size={20} />
+              <div className=" border  rounded-md p-1 mr-2">
+                <ModeToggle/>
               </div>
               <p>Selfcode</p>
             </div>
