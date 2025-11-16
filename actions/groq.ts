@@ -1,8 +1,8 @@
-import {Description, TestCase} from '../utils/types'
+import {ProblemDescription, TestCase} from '../utils/types'
 import {  GenerateProblem,TestcasesPrompt } from "../utils/prompts";
 import { Groq } from "../utils/groq";
 
-export async function generateProblem(prompt: string): Promise<Description> {
+export async function generateProblem(prompt: string): Promise<ProblemDescription> {
   const result = await Groq([
     { role: "system", content: GenerateProblem },
     { role: "user", content: `Generate a problem based on this idea: ${prompt}` },
@@ -14,7 +14,7 @@ export async function generateProblem(prompt: string): Promise<Description> {
     return result.reply; 
 }
 
-export async function generateTestcases(description: Description): Promise<TestCase[]> {
+export async function generateTestcases(description: ProblemDescription): Promise<TestCase[]> {
   
   const raw = await Groq([
     { role: "system", content: TestcasesPrompt },

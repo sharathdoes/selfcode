@@ -1,15 +1,13 @@
 
 import prisma from "@/prisma/prisma";
 
-export async function SetGroq({email, apikey , model}: {email:string, apikey:string, model:string}){
+export async function SetGroq({email, apikey }: {email:string, apikey:string}){
     if(!email) throw new Error("Email is required");
     try{
         const updateUser=await prisma.user.update({
         where:{email:email},
         data:{
-            groqkey:apikey,
-            selectedModel:model
-        }
+            groqkey:apikey        }
     })
     return updateUser;
     }catch(err){

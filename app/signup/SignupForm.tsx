@@ -16,7 +16,7 @@ type SignupFormValues = {
 };
 
 type Props = {
-  signupAction: (data: { name: string; email: string; password: string }) => Promise<{ name: string | null; id: string; email: string | null; emailVerified: Date | null; image: string | null; groqkey: string | null; selectedModel: string | null; password: string | null; createdAt: Date; updatedAt: Date; }>;
+  signupAction: (data: { name: string; email: string; password: string }) => Promise<{ name: string | null; id: string; email: string | null; emailVerified: Date | null; image: string | null; groqkey: string | null;  password: string | null; createdAt: Date; updatedAt: Date; }>;
 };
 
 export default function SignupForm({ signupAction }: Props) {
