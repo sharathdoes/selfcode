@@ -32,7 +32,7 @@ export type Contest = {
   startTime: string; 
   endTime: string;   
   durationMinutes: number; 
-
+  problemPrompts: { text: string }[];
   problems: ProblemDescription[]; 
 
   createdBy: {
@@ -51,7 +51,9 @@ export type Contest = {
   }[];
 
 
-  isPublic: boolean;
+  isPublic: string;
+  emails?: string[];
+
 
   status: "upcoming" | "running" | "completed";
 
