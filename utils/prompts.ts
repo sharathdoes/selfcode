@@ -22,6 +22,7 @@ Use this exact schema:
   ]
 }
 
+
 Include 3 examples and at least 2 solutions in different languages & 10 testcases.
 `;
 

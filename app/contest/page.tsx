@@ -16,13 +16,15 @@ import { useState } from "react";
 import { Contest } from "@/utils/types";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
+import {generateContest} from '../../actions/useGroqApi';
 function Header({ step }: { step: number }) {
   return <div className="flex items-center justify-center">Step {step} of 6</div>;
 }
 
 export default function CreateContest() {
   const [step, setStep] = useState(1);
+
+
 
   const topics = [
     "Array",
@@ -59,16 +61,57 @@ export default function CreateContest() {
     "Topological Sort",
   ];
 
-  const { register, control, handleSubmit, watch, setValue } = useForm<Contest>(
+  const { register, control, handleSubmit, watch, setValue, trigger,   formState: { errors } } = useForm<Contest>(
     {
       defaultValues: {
         isPublic: "no",
-        emails: [],
+        emails: [""],
         problemPrompts: [{ text: "" }],
       },
     }
   );
 
+
+  const validate = async (step: number) => {
+    if (step === 1) {
+      return await trigger(["title", "description", "difficulty"]);
+    }
+
+    if (step === 2) {
+      const selectedTopics = watch("topics") || [];
+      return selectedTopics.length > 0;
+    }
+
+    if (step === 3) {
+      return await trigger(["startTime", "endTime", "durationMinutes"]);
+    }
+
+    if (step === 4) {
+      const prompts = watch("problemPrompts") || [];
+      return prompts.every((p) => p.text.trim() !== "");
+    }
+
+    if (step === 6) {
+      const isPublic = watch("isPublic");
+      if (isPublic === "no") {
+        const emails = watch("emails") || [];
+        return emails.length > 0;
+      }
+      return true;
+    }
+
+    return true;
+  };
+
+  async function NextStep(step:number){
+    const ok =await validate(step);
+
+    if(!ok){
+      if(step === 4) { alert("Please ensure all problem prompts are filled out."); }
+    return;}
+    setStep(step + 1);
+  }
+  const [prob, setProb] = useState<any>([]);
   const formData = watch();
   const emails = formData.emails || [];
   const isPublic = formData.isPublic || "yes";
@@ -79,9 +122,22 @@ export default function CreateContest() {
     name: "problemPrompts",
   });
 
-  const submitContest = (data: Contest) => {
-    console.log("Contest Data: ", data);
-  };
+const submitContest = async (data: Contest) => {
+  console.log("Contest Data: ", data);
+
+  try {
+    // CALL your Groq AI problem generator (await is IMPORTANT)
+    const generated = await generateContest(
+      data.problemPrompts.map((p) => p.text)
+    );
+    const parsed = generated.map((p) => (typeof p === "string" ? JSON.parse(p) : p));
+
+    setProb(parsed); // UPDATE UI
+    console.log("Generated Problems: ", parsed);
+  } catch (err) {
+    console.error("Error generating contest problems:", err);
+  }
+};
 
   const toggleTopic = (topic: string) => {
     if (selectedTopics.includes(topic)) {
@@ -101,15 +157,16 @@ export default function CreateContest() {
       <div className="w-full max-w-lg p-6 border shadow-lg rounded-md">
         <Header step={step} />
 
-        <form onSubmit={handleSubmit(submitContest)}>
+<form onSubmit={handleSubmit(() => step === 6 && submitContest(formData))}>
           {step === 1 && (
             <div className="space-y-4 mt-4">
               <div>Enter Contest Name : </div>
-              <Input {...register("title")} />
+              <Input {...register("title", {required:"we need a title"})} />
+              { errors.title && <p className="text-red-500">Title is required</p>}
 
               <div>Enter Contest Description : </div>
-              <Textarea {...register("description")} />
-
+              <Textarea {...register("description", {required:"We need a Description"})} />
+              { errors.description && <p className="text-red-500">Description is required</p>}
               <div className="flex gap-2 items-center">
                 <p>Difficulty :</p>
                 <Select
@@ -129,8 +186,12 @@ export default function CreateContest() {
                   </SelectContent>
                 </Select>
               </div>
+              { errors.difficulty && <p className="text-red-500">Difficulty is required</p>}
             </div>
-          )}
+
+          )
+          
+        }
 
           {step === 2 && (
             <div className="space-y-2 mt-4 gap-1 flex flex-wrap flex-row">
@@ -159,17 +220,20 @@ export default function CreateContest() {
             <div className="grid grid-cols-1 gap-4 mt-4">
               <div>
                 <label className="text-sm font-medium">Start Time</label>
-                <Input type="datetime-local" {...register("startTime")} />
+                <Input type="datetime-local" {...register("startTime", {required : "please enter start time"})} />
+                {errors.startTime && <p className="text-red-500">Start Time is required</p>}
               </div>
 
               <div>
                 <label className="text-sm font-medium">End Time</label>
-                <Input type="datetime-local" {...register("endTime")} />
+                <Input type="datetime-local" {...register("endTime", {required : "please enter end time"})} />
+                {errors.endTime && <p className="text-red-500">End Time is required</p>}
               </div>
 
               <div>
                 <label className="text-sm font-medium">Duration (mins)</label>
-                <Input {...register("durationMinutes")} />
+                <Input {...register("durationMinutes", {required : "please enter duration"})} />
+                {errors.durationMinutes && <p className="text-red-500">Duration is required</p>}
               </div>
             </div>
           )}
@@ -182,8 +246,9 @@ export default function CreateContest() {
                 <div key={p.id} className="flex items-center gap-2">
                   <Textarea
                     placeholder={`Problem ${index + 1}`}
-                    {...register(`problemPrompts.${index}.text`)}
+                    {...register(`problemPrompts.${index}.text`, {required: "Problem prompt cannot be empty"})}
                   />
+                  
                   <Trash onClick={() => remove(index)} />
                 </div>
               ))}
@@ -194,7 +259,7 @@ export default function CreateContest() {
             </div>
           )}
 
-          {step === 5 && (
+          {step === 6 && (
             <div>
               {" "}
               <p className="font-semibold mb-3">Review your details</p>{" "}
@@ -202,10 +267,16 @@ export default function CreateContest() {
                 {" "}
                 {JSON.stringify(formData, null, 2)}
               </pre>{" "}
+              <div className="flex justify-end">
+                <Button type="submit" className="  mt-4">
+                Create Contest
+              </Button>
+              </div>
+              
             </div>
           )}
 
-          {step === 6 && (
+          {step === 5 && (
             <div className="flex flex-col gap-4 mt-4">
               <p>Is your test public?</p>
 
@@ -274,9 +345,7 @@ export default function CreateContest() {
                 </div>
               )}
 
-              <Button type="submit" className="mt-4">
-                Create Contest
-              </Button>
+              
             </div>
           )}
 
@@ -284,11 +353,16 @@ export default function CreateContest() {
             <Button variant="outline" onClick={() => setStep(step - 1)} disabled={step === 1} >
               Prev
             </Button>
-            <Button onClick={() => setStep(step + 1)} disabled={step === 6} type="button">
+            <Button onClick={()=>{NextStep(step)}} disabled={step === 6} >
               Next
             </Button>
           </div>
         </form>
+        
+      {prob && <div className="mt-4 p-4 border rounded">
+          <h2 className="text-lg font-semibold mb-2">Generated Problems:</h2>
+          <pre className="whitespace-pre-wrap">{JSON.stringify(prob, null, 2)}</pre>
+        </div>}
       </div>
     </div>
   );
