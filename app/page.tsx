@@ -4,8 +4,7 @@ import { ModeToggle } from "../components/dark";
 
 export default function Home() {
   return (
-    <>
-    <Button variant="default">Hey</Button>
+    <><div className="flex h-screen justify-center items-center">hello world</div>
     </>
   );
 }

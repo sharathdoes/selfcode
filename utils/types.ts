@@ -16,12 +16,12 @@ export type ProblemDescription = {
   description: string;
   returnformat: string;
   examples: Example[];
+  testcases:{ input: string; output: string };
   constraints: string[];
   Comments: string[];
   Solutions: Solution[];
 };
 
-export type TestCase = { input: string; output: string };
 
 export type Contest = {
   title: string;
@@ -41,24 +41,8 @@ export type Contest = {
     email?: string;
   };
 
-  participants?: {
-    userId: string;
-    username: string;
-    score: number;
-    solvedCount: number;
-    rank?: number;
-    submissions?: Submission[];
-  }[];
-
-
   isPublic: string;
   emails?: string[];
-
-
-  status: "upcoming" | "running" | "completed";
-
-  createdAt: string;
-  updatedAt: string;
 };
 
 export type Submission = {

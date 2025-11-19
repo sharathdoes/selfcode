@@ -1,28 +1,35 @@
-import {ProblemDescription, TestCase} from '../utils/types'
-import {  GenerateProblem,TestcasesPrompt } from "../utils/prompts";
-import { Groq } from "../utils/groq";
+'use server'
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
-export async function generateProblem(prompt: string): Promise<ProblemDescription> {
-  const result = await Groq([
-    { role: "system", content: GenerateProblem },
-    { role: "user", content: `Generate a problem based on this idea: ${prompt}` },
-  ]);
+type Message = {
+  role: string;
+  content: string;
+};
 
-    if ("error" in result) {
-      console.error(result.error);
-    } 
-    return result.reply; 
-}
+export async function Groq(req: Message[]) {
+  if (!req || req.length === 0) throw new Error("No details provided");
+  if (!GROQ_API_KEY) throw new Error("No GROQ API key provided");
 
-export async function generateTestcases(description: ProblemDescription): Promise<TestCase[]> {
-  
-  const raw = await Groq([
-    { role: "system", content: TestcasesPrompt },
-    {
-      role: "user",
-      content: `Problem: ${description.problemName}\nExamples: ${JSON.stringify(description.examples)}`,
+  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${GROQ_API_KEY}`,
+      "Content-Type": "application/json",
     },
-  ]);
+    body: JSON.stringify({
+      model: "llama-3.1-8b-instant",
+      messages: req,
+      temperature: 0.4,
+    }),
+  });
 
-  return raw.reply;
+  const data = await res.json();
+
+  if (!res.ok) {
+    // return a plain error object
+    return { error: data.error?.message || "Groq API failed" };
+  }
+
+  // return a plain object (safe to pass to Client Components)
+  return { reply: data.choices?.[0]?.message?.content || "" };
 }

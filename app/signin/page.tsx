@@ -103,8 +103,8 @@ export default function CardDemo() {
                 </Button>
           </form>
         </CardContent>
-
-        <CardFooter className="flex-col gap-2">
+        
+        {/* <CardFooter className="flex-col gap-2">
           <Button
             className="w-full"
             
@@ -112,7 +112,7 @@ export default function CardDemo() {
           >
             Login with Google
           </Button>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   );

@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 function Header({ step }: { step: number }) {
-  return <div className="flex items-center justify-center">Step {step}</div>;
+  return <div className="flex items-center justify-center">Step {step} of 6</div>;
 }
 
 export default function CreateContest() {
@@ -62,7 +62,7 @@ export default function CreateContest() {
   const { register, control, handleSubmit, watch, setValue } = useForm<Contest>(
     {
       defaultValues: {
-        isPublic: "yes",
+        isPublic: "no",
         emails: [],
         problemPrompts: [{ text: "" }],
       },
@@ -142,9 +142,10 @@ export default function CreateContest() {
                     key={topic}
                     onClick={() => toggleTopic(topic)}
                     className={
+
                       isSelected
-                        ? "bg-yellow-400 text-black border-b"
-                        : "bg-gray-200 text-black"
+                        ? "bg-yellow-400  rounded-2xl text-black border-b"
+                        : "bg-gray-200 rounded-2xl text-black"
                     }
                   >
                     {topic}{" "}
@@ -280,10 +281,10 @@ export default function CreateContest() {
           )}
 
           <div className="flex justify-between mt-6">
-            <Button onClick={() => setStep(step - 1)} type="button">
+            <Button variant="outline" onClick={() => setStep(step - 1)} disabled={step === 1} >
               Prev
             </Button>
-            <Button onClick={() => setStep(step + 1)} type="button">
+            <Button onClick={() => setStep(step + 1)} disabled={step === 6} type="button">
               Next
             </Button>
           </div>

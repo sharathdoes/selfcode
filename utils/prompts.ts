@@ -13,6 +13,7 @@ Use this exact schema:
   "examples": [
     {"input": "string", "output": "string", "explanation": "string"}
   ],
+  "testcases": {"input": "string", "output": "string"},
   "constraints": ["string"],
   "Comments": ["string"],
   "Solutions": [
@@ -21,14 +22,7 @@ Use this exact schema:
   ]
 }
 
-Include 3 examples and at least 2 solutions in different languages.
-`;
-
-export const TestcasesPrompt = `
-You are an AI that expands coding problem testcases.
-Given 3 examples of a problem, generate 7 more diverse and valid testcases.
-Do NOT repeat the examples. Ensure correctness.
-Output JSON array of { "input": string, "output": string } length 7.
+Include 3 examples and at least 2 solutions in different languages & 10 testcases.
 `;
 
 export const models = [
