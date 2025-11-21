@@ -126,7 +126,6 @@ const submitContest = async (data: Contest) => {
   console.log("Contest Data: ", data);
 
   try {
-    // CALL your Groq AI problem generator (await is IMPORTANT)
     const generated = await generateContest(
       data.problemPrompts.map((p) => p.text)
     );
