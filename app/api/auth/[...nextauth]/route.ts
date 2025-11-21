@@ -1,14 +1,14 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "@/prisma/prisma";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
 const handler = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: {
-    strategy: "jwt", // ✅ use JWT instead of database
+    strategy: "jwt"
   },
   providers: [
     GoogleProvider({
