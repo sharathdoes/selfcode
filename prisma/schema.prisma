@@ -19,7 +19,7 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   Contests  Contest[]  @relation("Creator")
-
+  Results   Result[] 
   feedback      Feedback[]
 }
 
@@ -42,7 +42,21 @@ model Contest {
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
   results        Result[]
+  contestants     ContestStudent[]
 }
+
+model ContestStudent {
+  id        String   @id @default(cuid())
+  contestId String
+  email     String
+  attempted Boolean  @default(false)
+  startedAt DateTime?
+
+  contest     Contest  @relation(fields: [contestId], references: [id], onDelete: Cascade)
+  @@unique([contestId, email])
+
+}
+
 
 model Problem {
   id               String   @id @default(cuid())
@@ -50,7 +64,7 @@ model Problem {
   contest          Contest  @relation(fields: [contestId], references: [id])
   problemName      String
   topics           String[]
-  difficult        String
+  difficulty       String
   description      String   @db.Text
   returnformat     String?
   examples         Json
@@ -62,17 +76,22 @@ model Problem {
 }
 
 model Result {
-  id          String        @id @default(cuid())
+  id          String   @id @default(cuid())
   contestId   String
-  contest     Contest       @relation(fields: [contestId], references: [id])
-  userId      String?       
-  username    String        
+  userId      String
+  username    String       
   score       Int
   solvedCount Int
-  details     Json?         
-  submissions Submission[] 
-  createdAt   DateTime      @default(now())
+  details     Json?
+  submissions Submission[]
+  createdAt   DateTime @default(now())
+
+  contest     Contest  @relation(fields: [contestId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+  
+  @@unique([contestId, userId]) 
 }
+
 
 model Submission {
   id          String   @id @default(cuid())

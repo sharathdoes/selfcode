@@ -386,6 +386,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Contest: 'Contest',
+  ContestStudent: 'ContestStudent',
   Problem: 'Problem',
   Result: 'Result',
   Submission: 'Submission',
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "contest" | "problem" | "result" | "submission" | "feedback"
+    modelProps: "user" | "contest" | "contestStudent" | "problem" | "result" | "submission" | "feedback"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -554,6 +555,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ContestCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ContestCountAggregateOutputType> | number
+        }
+      }
+    }
+    ContestStudent: {
+      payload: Prisma.$ContestStudentPayload<ExtArgs>
+      fields: Prisma.ContestStudentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ContestStudentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestStudentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ContestStudentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestStudentPayload>
+        }
+        findFirst: {
+          args: Prisma.ContestStudentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestStudentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ContestStudentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestStudentPayload>
+        }
+        findMany: {
+          args: Prisma.ContestStudentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestStudentPayload>[]
+        }
+        create: {
+          args: Prisma.ContestStudentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestStudentPayload>
+        }
+        createMany: {
+          args: Prisma.ContestStudentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ContestStudentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestStudentPayload>[]
+        }
+        delete: {
+          args: Prisma.ContestStudentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestStudentPayload>
+        }
+        update: {
+          args: Prisma.ContestStudentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestStudentPayload>
+        }
+        deleteMany: {
+          args: Prisma.ContestStudentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ContestStudentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ContestStudentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestStudentPayload>[]
+        }
+        upsert: {
+          args: Prisma.ContestStudentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestStudentPayload>
+        }
+        aggregate: {
+          args: Prisma.ContestStudentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateContestStudent>
+        }
+        groupBy: {
+          args: Prisma.ContestStudentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContestStudentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ContestStudentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContestStudentCountAggregateOutputType> | number
         }
       }
     }
@@ -927,12 +1002,23 @@ export const ContestScalarFieldEnum = {
 export type ContestScalarFieldEnum = (typeof ContestScalarFieldEnum)[keyof typeof ContestScalarFieldEnum]
 
 
+export const ContestStudentScalarFieldEnum = {
+  id: 'id',
+  contestId: 'contestId',
+  email: 'email',
+  attempted: 'attempted',
+  startedAt: 'startedAt'
+} as const
+
+export type ContestStudentScalarFieldEnum = (typeof ContestStudentScalarFieldEnum)[keyof typeof ContestStudentScalarFieldEnum]
+
+
 export const ProblemScalarFieldEnum = {
   id: 'id',
   contestId: 'contestId',
   problemName: 'problemName',
   topics: 'topics',
-  difficult: 'difficult',
+  difficulty: 'difficulty',
   description: 'description',
   returnformat: 'returnformat',
   examples: 'examples',
@@ -1197,6 +1283,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   contest?: Prisma.ContestOmit
+  contestStudent?: Prisma.ContestStudentOmit
   problem?: Prisma.ProblemOmit
   result?: Prisma.ResultOmit
   submission?: Prisma.SubmissionOmit

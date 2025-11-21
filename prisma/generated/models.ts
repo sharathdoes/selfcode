@@ -10,6 +10,7 @@
  */
 export type * from './models/User'
 export type * from './models/Contest'
+export type * from './models/ContestStudent'
 export type * from './models/Problem'
 export type * from './models/Result'
 export type * from './models/Submission'

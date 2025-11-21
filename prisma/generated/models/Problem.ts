@@ -28,7 +28,7 @@ export type ProblemMinAggregateOutputType = {
   id: string | null
   contestId: string | null
   problemName: string | null
-  difficult: string | null
+  difficulty: string | null
   description: string | null
   returnformat: string | null
   createdAt: Date | null
@@ -38,7 +38,7 @@ export type ProblemMaxAggregateOutputType = {
   id: string | null
   contestId: string | null
   problemName: string | null
-  difficult: string | null
+  difficulty: string | null
   description: string | null
   returnformat: string | null
   createdAt: Date | null
@@ -49,7 +49,7 @@ export type ProblemCountAggregateOutputType = {
   contestId: number
   problemName: number
   topics: number
-  difficult: number
+  difficulty: number
   description: number
   returnformat: number
   examples: number
@@ -66,7 +66,7 @@ export type ProblemMinAggregateInputType = {
   id?: true
   contestId?: true
   problemName?: true
-  difficult?: true
+  difficulty?: true
   description?: true
   returnformat?: true
   createdAt?: true
@@ -76,7 +76,7 @@ export type ProblemMaxAggregateInputType = {
   id?: true
   contestId?: true
   problemName?: true
-  difficult?: true
+  difficulty?: true
   description?: true
   returnformat?: true
   createdAt?: true
@@ -87,7 +87,7 @@ export type ProblemCountAggregateInputType = {
   contestId?: true
   problemName?: true
   topics?: true
-  difficult?: true
+  difficulty?: true
   description?: true
   returnformat?: true
   examples?: true
@@ -176,7 +176,7 @@ export type ProblemGroupByOutputType = {
   contestId: string
   problemName: string
   topics: string[]
-  difficult: string
+  difficulty: string
   description: string
   returnformat: string | null
   examples: runtime.JsonValue
@@ -213,7 +213,7 @@ export type ProblemWhereInput = {
   contestId?: Prisma.StringFilter<"Problem"> | string
   problemName?: Prisma.StringFilter<"Problem"> | string
   topics?: Prisma.StringNullableListFilter<"Problem">
-  difficult?: Prisma.StringFilter<"Problem"> | string
+  difficulty?: Prisma.StringFilter<"Problem"> | string
   description?: Prisma.StringFilter<"Problem"> | string
   returnformat?: Prisma.StringNullableFilter<"Problem"> | string | null
   examples?: Prisma.JsonFilter<"Problem">
@@ -230,7 +230,7 @@ export type ProblemOrderByWithRelationInput = {
   contestId?: Prisma.SortOrder
   problemName?: Prisma.SortOrder
   topics?: Prisma.SortOrder
-  difficult?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   returnformat?: Prisma.SortOrderInput | Prisma.SortOrder
   examples?: Prisma.SortOrder
@@ -250,7 +250,7 @@ export type ProblemWhereUniqueInput = Prisma.AtLeast<{
   contestId?: Prisma.StringFilter<"Problem"> | string
   problemName?: Prisma.StringFilter<"Problem"> | string
   topics?: Prisma.StringNullableListFilter<"Problem">
-  difficult?: Prisma.StringFilter<"Problem"> | string
+  difficulty?: Prisma.StringFilter<"Problem"> | string
   description?: Prisma.StringFilter<"Problem"> | string
   returnformat?: Prisma.StringNullableFilter<"Problem"> | string | null
   examples?: Prisma.JsonFilter<"Problem">
@@ -267,7 +267,7 @@ export type ProblemOrderByWithAggregationInput = {
   contestId?: Prisma.SortOrder
   problemName?: Prisma.SortOrder
   topics?: Prisma.SortOrder
-  difficult?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   returnformat?: Prisma.SortOrderInput | Prisma.SortOrder
   examples?: Prisma.SortOrder
@@ -289,7 +289,7 @@ export type ProblemScalarWhereWithAggregatesInput = {
   contestId?: Prisma.StringWithAggregatesFilter<"Problem"> | string
   problemName?: Prisma.StringWithAggregatesFilter<"Problem"> | string
   topics?: Prisma.StringNullableListFilter<"Problem">
-  difficult?: Prisma.StringWithAggregatesFilter<"Problem"> | string
+  difficulty?: Prisma.StringWithAggregatesFilter<"Problem"> | string
   description?: Prisma.StringWithAggregatesFilter<"Problem"> | string
   returnformat?: Prisma.StringNullableWithAggregatesFilter<"Problem"> | string | null
   examples?: Prisma.JsonWithAggregatesFilter<"Problem">
@@ -304,7 +304,7 @@ export type ProblemCreateInput = {
   id?: string
   problemName: string
   topics?: Prisma.ProblemCreatetopicsInput | string[]
-  difficult: string
+  difficulty: string
   description: string
   returnformat?: string | null
   examples: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -321,7 +321,7 @@ export type ProblemUncheckedCreateInput = {
   contestId: string
   problemName: string
   topics?: Prisma.ProblemCreatetopicsInput | string[]
-  difficult: string
+  difficulty: string
   description: string
   returnformat?: string | null
   examples: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -336,7 +336,7 @@ export type ProblemUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   problemName?: Prisma.StringFieldUpdateOperationsInput | string
   topics?: Prisma.ProblemUpdatetopicsInput | string[]
-  difficult?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   returnformat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   examples?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -353,7 +353,7 @@ export type ProblemUncheckedUpdateInput = {
   contestId?: Prisma.StringFieldUpdateOperationsInput | string
   problemName?: Prisma.StringFieldUpdateOperationsInput | string
   topics?: Prisma.ProblemUpdatetopicsInput | string[]
-  difficult?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   returnformat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   examples?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -369,7 +369,7 @@ export type ProblemCreateManyInput = {
   contestId: string
   problemName: string
   topics?: Prisma.ProblemCreatetopicsInput | string[]
-  difficult: string
+  difficulty: string
   description: string
   returnformat?: string | null
   examples: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -384,7 +384,7 @@ export type ProblemUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   problemName?: Prisma.StringFieldUpdateOperationsInput | string
   topics?: Prisma.ProblemUpdatetopicsInput | string[]
-  difficult?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   returnformat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   examples?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -400,7 +400,7 @@ export type ProblemUncheckedUpdateManyInput = {
   contestId?: Prisma.StringFieldUpdateOperationsInput | string
   problemName?: Prisma.StringFieldUpdateOperationsInput | string
   topics?: Prisma.ProblemUpdatetopicsInput | string[]
-  difficult?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   returnformat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   examples?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -426,7 +426,7 @@ export type ProblemCountOrderByAggregateInput = {
   contestId?: Prisma.SortOrder
   problemName?: Prisma.SortOrder
   topics?: Prisma.SortOrder
-  difficult?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   returnformat?: Prisma.SortOrder
   examples?: Prisma.SortOrder
@@ -441,7 +441,7 @@ export type ProblemMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   contestId?: Prisma.SortOrder
   problemName?: Prisma.SortOrder
-  difficult?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   returnformat?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -451,7 +451,7 @@ export type ProblemMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   contestId?: Prisma.SortOrder
   problemName?: Prisma.SortOrder
-  difficult?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   returnformat?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -530,7 +530,7 @@ export type ProblemCreateWithoutContestInput = {
   id?: string
   problemName: string
   topics?: Prisma.ProblemCreatetopicsInput | string[]
-  difficult: string
+  difficulty: string
   description: string
   returnformat?: string | null
   examples: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -545,7 +545,7 @@ export type ProblemUncheckedCreateWithoutContestInput = {
   id?: string
   problemName: string
   topics?: Prisma.ProblemCreatetopicsInput | string[]
-  difficult: string
+  difficulty: string
   description: string
   returnformat?: string | null
   examples: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -590,7 +590,7 @@ export type ProblemScalarWhereInput = {
   contestId?: Prisma.StringFilter<"Problem"> | string
   problemName?: Prisma.StringFilter<"Problem"> | string
   topics?: Prisma.StringNullableListFilter<"Problem">
-  difficult?: Prisma.StringFilter<"Problem"> | string
+  difficulty?: Prisma.StringFilter<"Problem"> | string
   description?: Prisma.StringFilter<"Problem"> | string
   returnformat?: Prisma.StringNullableFilter<"Problem"> | string | null
   examples?: Prisma.JsonFilter<"Problem">
@@ -605,7 +605,7 @@ export type ProblemCreateManyContestInput = {
   id?: string
   problemName: string
   topics?: Prisma.ProblemCreatetopicsInput | string[]
-  difficult: string
+  difficulty: string
   description: string
   returnformat?: string | null
   examples: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -620,7 +620,7 @@ export type ProblemUpdateWithoutContestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   problemName?: Prisma.StringFieldUpdateOperationsInput | string
   topics?: Prisma.ProblemUpdatetopicsInput | string[]
-  difficult?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   returnformat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   examples?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -635,7 +635,7 @@ export type ProblemUncheckedUpdateWithoutContestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   problemName?: Prisma.StringFieldUpdateOperationsInput | string
   topics?: Prisma.ProblemUpdatetopicsInput | string[]
-  difficult?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   returnformat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   examples?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -650,7 +650,7 @@ export type ProblemUncheckedUpdateManyWithoutContestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   problemName?: Prisma.StringFieldUpdateOperationsInput | string
   topics?: Prisma.ProblemUpdatetopicsInput | string[]
-  difficult?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   returnformat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   examples?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -668,7 +668,7 @@ export type ProblemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   contestId?: boolean
   problemName?: boolean
   topics?: boolean
-  difficult?: boolean
+  difficulty?: boolean
   description?: boolean
   returnformat?: boolean
   examples?: boolean
@@ -685,7 +685,7 @@ export type ProblemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   contestId?: boolean
   problemName?: boolean
   topics?: boolean
-  difficult?: boolean
+  difficulty?: boolean
   description?: boolean
   returnformat?: boolean
   examples?: boolean
@@ -702,7 +702,7 @@ export type ProblemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   contestId?: boolean
   problemName?: boolean
   topics?: boolean
-  difficult?: boolean
+  difficulty?: boolean
   description?: boolean
   returnformat?: boolean
   examples?: boolean
@@ -719,7 +719,7 @@ export type ProblemSelectScalar = {
   contestId?: boolean
   problemName?: boolean
   topics?: boolean
-  difficult?: boolean
+  difficulty?: boolean
   description?: boolean
   returnformat?: boolean
   examples?: boolean
@@ -730,7 +730,7 @@ export type ProblemSelectScalar = {
   createdAt?: boolean
 }
 
-export type ProblemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "contestId" | "problemName" | "topics" | "difficult" | "description" | "returnformat" | "examples" | "constraints" | "comments" | "solutions" | "testcases" | "createdAt", ExtArgs["result"]["problem"]>
+export type ProblemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "contestId" | "problemName" | "topics" | "difficulty" | "description" | "returnformat" | "examples" | "constraints" | "comments" | "solutions" | "testcases" | "createdAt", ExtArgs["result"]["problem"]>
 export type ProblemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   contest?: boolean | Prisma.ContestDefaultArgs<ExtArgs>
 }
@@ -751,7 +751,7 @@ export type $ProblemPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     contestId: string
     problemName: string
     topics: string[]
-    difficult: string
+    difficulty: string
     description: string
     returnformat: string | null
     examples: runtime.JsonValue
@@ -1188,7 +1188,7 @@ export interface ProblemFieldRefs {
   readonly contestId: Prisma.FieldRef<"Problem", 'String'>
   readonly problemName: Prisma.FieldRef<"Problem", 'String'>
   readonly topics: Prisma.FieldRef<"Problem", 'String[]'>
-  readonly difficult: Prisma.FieldRef<"Problem", 'String'>
+  readonly difficulty: Prisma.FieldRef<"Problem", 'String'>
   readonly description: Prisma.FieldRef<"Problem", 'String'>
   readonly returnformat: Prisma.FieldRef<"Problem", 'String'>
   readonly examples: Prisma.FieldRef<"Problem", 'Json'>

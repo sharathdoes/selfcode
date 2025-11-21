@@ -200,7 +200,7 @@ export type ResultGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type ResultGroupByOutputType = {
   id: string
   contestId: string
-  userId: string | null
+  userId: string
   username: string
   score: number
   solvedCount: number
@@ -234,49 +234,53 @@ export type ResultWhereInput = {
   NOT?: Prisma.ResultWhereInput | Prisma.ResultWhereInput[]
   id?: Prisma.StringFilter<"Result"> | string
   contestId?: Prisma.StringFilter<"Result"> | string
-  userId?: Prisma.StringNullableFilter<"Result"> | string | null
+  userId?: Prisma.StringFilter<"Result"> | string
   username?: Prisma.StringFilter<"Result"> | string
   score?: Prisma.IntFilter<"Result"> | number
   solvedCount?: Prisma.IntFilter<"Result"> | number
   details?: Prisma.JsonNullableFilter<"Result">
   createdAt?: Prisma.DateTimeFilter<"Result"> | Date | string
-  contest?: Prisma.XOR<Prisma.ContestScalarRelationFilter, Prisma.ContestWhereInput>
   submissions?: Prisma.SubmissionListRelationFilter
+  contest?: Prisma.XOR<Prisma.ContestScalarRelationFilter, Prisma.ContestWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type ResultOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   contestId?: Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  userId?: Prisma.SortOrder
   username?: Prisma.SortOrder
   score?: Prisma.SortOrder
   solvedCount?: Prisma.SortOrder
   details?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  contest?: Prisma.ContestOrderByWithRelationInput
   submissions?: Prisma.SubmissionOrderByRelationAggregateInput
+  contest?: Prisma.ContestOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type ResultWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  contestId_userId?: Prisma.ResultContestIdUserIdCompoundUniqueInput
   AND?: Prisma.ResultWhereInput | Prisma.ResultWhereInput[]
   OR?: Prisma.ResultWhereInput[]
   NOT?: Prisma.ResultWhereInput | Prisma.ResultWhereInput[]
   contestId?: Prisma.StringFilter<"Result"> | string
-  userId?: Prisma.StringNullableFilter<"Result"> | string | null
+  userId?: Prisma.StringFilter<"Result"> | string
   username?: Prisma.StringFilter<"Result"> | string
   score?: Prisma.IntFilter<"Result"> | number
   solvedCount?: Prisma.IntFilter<"Result"> | number
   details?: Prisma.JsonNullableFilter<"Result">
   createdAt?: Prisma.DateTimeFilter<"Result"> | Date | string
-  contest?: Prisma.XOR<Prisma.ContestScalarRelationFilter, Prisma.ContestWhereInput>
   submissions?: Prisma.SubmissionListRelationFilter
-}, "id">
+  contest?: Prisma.XOR<Prisma.ContestScalarRelationFilter, Prisma.ContestWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+}, "id" | "contestId_userId">
 
 export type ResultOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   contestId?: Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  userId?: Prisma.SortOrder
   username?: Prisma.SortOrder
   score?: Prisma.SortOrder
   solvedCount?: Prisma.SortOrder
@@ -295,7 +299,7 @@ export type ResultScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ResultScalarWhereWithAggregatesInput | Prisma.ResultScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Result"> | string
   contestId?: Prisma.StringWithAggregatesFilter<"Result"> | string
-  userId?: Prisma.StringNullableWithAggregatesFilter<"Result"> | string | null
+  userId?: Prisma.StringWithAggregatesFilter<"Result"> | string
   username?: Prisma.StringWithAggregatesFilter<"Result"> | string
   score?: Prisma.IntWithAggregatesFilter<"Result"> | number
   solvedCount?: Prisma.IntWithAggregatesFilter<"Result"> | number
@@ -305,20 +309,20 @@ export type ResultScalarWhereWithAggregatesInput = {
 
 export type ResultCreateInput = {
   id?: string
-  userId?: string | null
   username: string
   score: number
   solvedCount: number
   details?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
-  contest: Prisma.ContestCreateNestedOneWithoutResultsInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutResultInput
+  contest: Prisma.ContestCreateNestedOneWithoutResultsInput
+  user: Prisma.UserCreateNestedOneWithoutResultsInput
 }
 
 export type ResultUncheckedCreateInput = {
   id?: string
   contestId: string
-  userId?: string | null
+  userId: string
   username: string
   score: number
   solvedCount: number
@@ -329,20 +333,20 @@ export type ResultUncheckedCreateInput = {
 
 export type ResultUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   username?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   solvedCount?: Prisma.IntFieldUpdateOperationsInput | number
   details?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contest?: Prisma.ContestUpdateOneRequiredWithoutResultsNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutResultNestedInput
+  contest?: Prisma.ContestUpdateOneRequiredWithoutResultsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutResultsNestedInput
 }
 
 export type ResultUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   contestId?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   solvedCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -354,7 +358,7 @@ export type ResultUncheckedUpdateInput = {
 export type ResultCreateManyInput = {
   id?: string
   contestId: string
-  userId?: string | null
+  userId: string
   username: string
   score: number
   solvedCount: number
@@ -364,7 +368,6 @@ export type ResultCreateManyInput = {
 
 export type ResultUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   username?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   solvedCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -375,7 +378,7 @@ export type ResultUpdateManyMutationInput = {
 export type ResultUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   contestId?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   solvedCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -391,6 +394,11 @@ export type ResultListRelationFilter = {
 
 export type ResultOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type ResultContestIdUserIdCompoundUniqueInput = {
+  contestId: string
+  userId: string
 }
 
 export type ResultCountOrderByAggregateInput = {
@@ -437,6 +445,48 @@ export type ResultSumOrderByAggregateInput = {
 export type ResultScalarRelationFilter = {
   is?: Prisma.ResultWhereInput
   isNot?: Prisma.ResultWhereInput
+}
+
+export type ResultCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ResultCreateWithoutUserInput, Prisma.ResultUncheckedCreateWithoutUserInput> | Prisma.ResultCreateWithoutUserInput[] | Prisma.ResultUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ResultCreateOrConnectWithoutUserInput | Prisma.ResultCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ResultCreateManyUserInputEnvelope
+  connect?: Prisma.ResultWhereUniqueInput | Prisma.ResultWhereUniqueInput[]
+}
+
+export type ResultUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ResultCreateWithoutUserInput, Prisma.ResultUncheckedCreateWithoutUserInput> | Prisma.ResultCreateWithoutUserInput[] | Prisma.ResultUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ResultCreateOrConnectWithoutUserInput | Prisma.ResultCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ResultCreateManyUserInputEnvelope
+  connect?: Prisma.ResultWhereUniqueInput | Prisma.ResultWhereUniqueInput[]
+}
+
+export type ResultUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ResultCreateWithoutUserInput, Prisma.ResultUncheckedCreateWithoutUserInput> | Prisma.ResultCreateWithoutUserInput[] | Prisma.ResultUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ResultCreateOrConnectWithoutUserInput | Prisma.ResultCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ResultUpsertWithWhereUniqueWithoutUserInput | Prisma.ResultUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ResultCreateManyUserInputEnvelope
+  set?: Prisma.ResultWhereUniqueInput | Prisma.ResultWhereUniqueInput[]
+  disconnect?: Prisma.ResultWhereUniqueInput | Prisma.ResultWhereUniqueInput[]
+  delete?: Prisma.ResultWhereUniqueInput | Prisma.ResultWhereUniqueInput[]
+  connect?: Prisma.ResultWhereUniqueInput | Prisma.ResultWhereUniqueInput[]
+  update?: Prisma.ResultUpdateWithWhereUniqueWithoutUserInput | Prisma.ResultUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ResultUpdateManyWithWhereWithoutUserInput | Prisma.ResultUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ResultScalarWhereInput | Prisma.ResultScalarWhereInput[]
+}
+
+export type ResultUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ResultCreateWithoutUserInput, Prisma.ResultUncheckedCreateWithoutUserInput> | Prisma.ResultCreateWithoutUserInput[] | Prisma.ResultUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ResultCreateOrConnectWithoutUserInput | Prisma.ResultCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ResultUpsertWithWhereUniqueWithoutUserInput | Prisma.ResultUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ResultCreateManyUserInputEnvelope
+  set?: Prisma.ResultWhereUniqueInput | Prisma.ResultWhereUniqueInput[]
+  disconnect?: Prisma.ResultWhereUniqueInput | Prisma.ResultWhereUniqueInput[]
+  delete?: Prisma.ResultWhereUniqueInput | Prisma.ResultWhereUniqueInput[]
+  connect?: Prisma.ResultWhereUniqueInput | Prisma.ResultWhereUniqueInput[]
+  update?: Prisma.ResultUpdateWithWhereUniqueWithoutUserInput | Prisma.ResultUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ResultUpdateManyWithWhereWithoutUserInput | Prisma.ResultUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ResultScalarWhereInput | Prisma.ResultScalarWhereInput[]
 }
 
 export type ResultCreateNestedManyWithoutContestInput = {
@@ -495,20 +545,82 @@ export type ResultUpdateOneRequiredWithoutSubmissionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ResultUpdateToOneWithWhereWithoutSubmissionsInput, Prisma.ResultUpdateWithoutSubmissionsInput>, Prisma.ResultUncheckedUpdateWithoutSubmissionsInput>
 }
 
-export type ResultCreateWithoutContestInput = {
+export type ResultCreateWithoutUserInput = {
   id?: string
-  userId?: string | null
   username: string
   score: number
   solvedCount: number
   details?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   submissions?: Prisma.SubmissionCreateNestedManyWithoutResultInput
+  contest: Prisma.ContestCreateNestedOneWithoutResultsInput
+}
+
+export type ResultUncheckedCreateWithoutUserInput = {
+  id?: string
+  contestId: string
+  username: string
+  score: number
+  solvedCount: number
+  details?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutResultInput
+}
+
+export type ResultCreateOrConnectWithoutUserInput = {
+  where: Prisma.ResultWhereUniqueInput
+  create: Prisma.XOR<Prisma.ResultCreateWithoutUserInput, Prisma.ResultUncheckedCreateWithoutUserInput>
+}
+
+export type ResultCreateManyUserInputEnvelope = {
+  data: Prisma.ResultCreateManyUserInput | Prisma.ResultCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type ResultUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ResultWhereUniqueInput
+  update: Prisma.XOR<Prisma.ResultUpdateWithoutUserInput, Prisma.ResultUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.ResultCreateWithoutUserInput, Prisma.ResultUncheckedCreateWithoutUserInput>
+}
+
+export type ResultUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ResultWhereUniqueInput
+  data: Prisma.XOR<Prisma.ResultUpdateWithoutUserInput, Prisma.ResultUncheckedUpdateWithoutUserInput>
+}
+
+export type ResultUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.ResultScalarWhereInput
+  data: Prisma.XOR<Prisma.ResultUpdateManyMutationInput, Prisma.ResultUncheckedUpdateManyWithoutUserInput>
+}
+
+export type ResultScalarWhereInput = {
+  AND?: Prisma.ResultScalarWhereInput | Prisma.ResultScalarWhereInput[]
+  OR?: Prisma.ResultScalarWhereInput[]
+  NOT?: Prisma.ResultScalarWhereInput | Prisma.ResultScalarWhereInput[]
+  id?: Prisma.StringFilter<"Result"> | string
+  contestId?: Prisma.StringFilter<"Result"> | string
+  userId?: Prisma.StringFilter<"Result"> | string
+  username?: Prisma.StringFilter<"Result"> | string
+  score?: Prisma.IntFilter<"Result"> | number
+  solvedCount?: Prisma.IntFilter<"Result"> | number
+  details?: Prisma.JsonNullableFilter<"Result">
+  createdAt?: Prisma.DateTimeFilter<"Result"> | Date | string
+}
+
+export type ResultCreateWithoutContestInput = {
+  id?: string
+  username: string
+  score: number
+  solvedCount: number
+  details?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutResultInput
+  user: Prisma.UserCreateNestedOneWithoutResultsInput
 }
 
 export type ResultUncheckedCreateWithoutContestInput = {
   id?: string
-  userId?: string | null
+  userId: string
   username: string
   score: number
   solvedCount: number
@@ -543,35 +655,21 @@ export type ResultUpdateManyWithWhereWithoutContestInput = {
   data: Prisma.XOR<Prisma.ResultUpdateManyMutationInput, Prisma.ResultUncheckedUpdateManyWithoutContestInput>
 }
 
-export type ResultScalarWhereInput = {
-  AND?: Prisma.ResultScalarWhereInput | Prisma.ResultScalarWhereInput[]
-  OR?: Prisma.ResultScalarWhereInput[]
-  NOT?: Prisma.ResultScalarWhereInput | Prisma.ResultScalarWhereInput[]
-  id?: Prisma.StringFilter<"Result"> | string
-  contestId?: Prisma.StringFilter<"Result"> | string
-  userId?: Prisma.StringNullableFilter<"Result"> | string | null
-  username?: Prisma.StringFilter<"Result"> | string
-  score?: Prisma.IntFilter<"Result"> | number
-  solvedCount?: Prisma.IntFilter<"Result"> | number
-  details?: Prisma.JsonNullableFilter<"Result">
-  createdAt?: Prisma.DateTimeFilter<"Result"> | Date | string
-}
-
 export type ResultCreateWithoutSubmissionsInput = {
   id?: string
-  userId?: string | null
   username: string
   score: number
   solvedCount: number
   details?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   contest: Prisma.ContestCreateNestedOneWithoutResultsInput
+  user: Prisma.UserCreateNestedOneWithoutResultsInput
 }
 
 export type ResultUncheckedCreateWithoutSubmissionsInput = {
   id?: string
   contestId: string
-  userId?: string | null
+  userId: string
   username: string
   score: number
   solvedCount: number
@@ -597,19 +695,61 @@ export type ResultUpdateToOneWithWhereWithoutSubmissionsInput = {
 
 export type ResultUpdateWithoutSubmissionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   username?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   solvedCount?: Prisma.IntFieldUpdateOperationsInput | number
   details?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contest?: Prisma.ContestUpdateOneRequiredWithoutResultsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutResultsNestedInput
 }
 
 export type ResultUncheckedUpdateWithoutSubmissionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   contestId?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
+  solvedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  details?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ResultCreateManyUserInput = {
+  id?: string
+  contestId: string
+  username: string
+  score: number
+  solvedCount: number
+  details?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+}
+
+export type ResultUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
+  solvedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  details?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissions?: Prisma.SubmissionUpdateManyWithoutResultNestedInput
+  contest?: Prisma.ContestUpdateOneRequiredWithoutResultsNestedInput
+}
+
+export type ResultUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  contestId?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  score?: Prisma.IntFieldUpdateOperationsInput | number
+  solvedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  details?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutResultNestedInput
+}
+
+export type ResultUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  contestId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   solvedCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -619,7 +759,7 @@ export type ResultUncheckedUpdateWithoutSubmissionsInput = {
 
 export type ResultCreateManyContestInput = {
   id?: string
-  userId?: string | null
+  userId: string
   username: string
   score: number
   solvedCount: number
@@ -629,18 +769,18 @@ export type ResultCreateManyContestInput = {
 
 export type ResultUpdateWithoutContestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   username?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   solvedCount?: Prisma.IntFieldUpdateOperationsInput | number
   details?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submissions?: Prisma.SubmissionUpdateManyWithoutResultNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutResultsNestedInput
 }
 
 export type ResultUncheckedUpdateWithoutContestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   solvedCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -651,7 +791,7 @@ export type ResultUncheckedUpdateWithoutContestInput = {
 
 export type ResultUncheckedUpdateManyWithoutContestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   solvedCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -699,8 +839,9 @@ export type ResultSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   solvedCount?: boolean
   details?: boolean
   createdAt?: boolean
-  contest?: boolean | Prisma.ContestDefaultArgs<ExtArgs>
   submissions?: boolean | Prisma.Result$submissionsArgs<ExtArgs>
+  contest?: boolean | Prisma.ContestDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ResultCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["result"]>
 
@@ -714,6 +855,7 @@ export type ResultSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   details?: boolean
   createdAt?: boolean
   contest?: boolean | Prisma.ContestDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["result"]>
 
 export type ResultSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -726,6 +868,7 @@ export type ResultSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   details?: boolean
   createdAt?: boolean
   contest?: boolean | Prisma.ContestDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["result"]>
 
 export type ResultSelectScalar = {
@@ -741,27 +884,31 @@ export type ResultSelectScalar = {
 
 export type ResultOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "contestId" | "userId" | "username" | "score" | "solvedCount" | "details" | "createdAt", ExtArgs["result"]["result"]>
 export type ResultInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  contest?: boolean | Prisma.ContestDefaultArgs<ExtArgs>
   submissions?: boolean | Prisma.Result$submissionsArgs<ExtArgs>
+  contest?: boolean | Prisma.ContestDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ResultCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ResultIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   contest?: boolean | Prisma.ContestDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ResultIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   contest?: boolean | Prisma.ContestDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $ResultPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Result"
   objects: {
-    contest: Prisma.$ContestPayload<ExtArgs>
     submissions: Prisma.$SubmissionPayload<ExtArgs>[]
+    contest: Prisma.$ContestPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     contestId: string
-    userId: string | null
+    userId: string
     username: string
     score: number
     solvedCount: number
@@ -1161,8 +1308,9 @@ readonly fields: ResultFieldRefs;
  */
 export interface Prisma__ResultClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  contest<T extends Prisma.ContestDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ContestDefaultArgs<ExtArgs>>): Prisma.Prisma__ContestClient<runtime.Types.Result.GetResult<Prisma.$ContestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   submissions<T extends Prisma.Result$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Result$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  contest<T extends Prisma.ContestDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ContestDefaultArgs<ExtArgs>>): Prisma.Prisma__ContestClient<runtime.Types.Result.GetResult<Prisma.$ContestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

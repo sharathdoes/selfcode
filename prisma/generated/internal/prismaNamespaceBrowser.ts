@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Contest: 'Contest',
+  ContestStudent: 'ContestStudent',
   Problem: 'Problem',
   Result: 'Result',
   Submission: 'Submission',
@@ -110,12 +111,23 @@ export const ContestScalarFieldEnum = {
 export type ContestScalarFieldEnum = (typeof ContestScalarFieldEnum)[keyof typeof ContestScalarFieldEnum]
 
 
+export const ContestStudentScalarFieldEnum = {
+  id: 'id',
+  contestId: 'contestId',
+  email: 'email',
+  attempted: 'attempted',
+  startedAt: 'startedAt'
+} as const
+
+export type ContestStudentScalarFieldEnum = (typeof ContestStudentScalarFieldEnum)[keyof typeof ContestStudentScalarFieldEnum]
+
+
 export const ProblemScalarFieldEnum = {
   id: 'id',
   contestId: 'contestId',
   problemName: 'problemName',
   topics: 'topics',
-  difficult: 'difficult',
+  difficulty: 'difficulty',
   description: 'description',
   returnformat: 'returnformat',
   examples: 'examples',

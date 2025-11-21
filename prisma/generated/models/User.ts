@@ -215,6 +215,7 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   Contests?: Prisma.ContestListRelationFilter
+  Results?: Prisma.ResultListRelationFilter
   feedback?: Prisma.FeedbackListRelationFilter
 }
 
@@ -229,6 +230,7 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   Contests?: Prisma.ContestOrderByRelationAggregateInput
+  Results?: Prisma.ResultOrderByRelationAggregateInput
   feedback?: Prisma.FeedbackOrderByRelationAggregateInput
 }
 
@@ -246,6 +248,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   Contests?: Prisma.ContestListRelationFilter
+  Results?: Prisma.ResultListRelationFilter
   feedback?: Prisma.FeedbackListRelationFilter
 }, "id" | "email">
 
@@ -290,6 +293,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   Contests?: Prisma.ContestCreateNestedManyWithoutCreatedByInput
+  Results?: Prisma.ResultCreateNestedManyWithoutUserInput
   feedback?: Prisma.FeedbackCreateNestedManyWithoutUserInput
 }
 
@@ -304,6 +308,7 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   Contests?: Prisma.ContestUncheckedCreateNestedManyWithoutCreatedByInput
+  Results?: Prisma.ResultUncheckedCreateNestedManyWithoutUserInput
   feedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -318,6 +323,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contests?: Prisma.ContestUpdateManyWithoutCreatedByNestedInput
+  Results?: Prisma.ResultUpdateManyWithoutUserNestedInput
   feedback?: Prisma.FeedbackUpdateManyWithoutUserNestedInput
 }
 
@@ -332,6 +338,7 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contests?: Prisma.ContestUncheckedUpdateManyWithoutCreatedByNestedInput
+  Results?: Prisma.ResultUncheckedUpdateManyWithoutUserNestedInput
   feedback?: Prisma.FeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -442,6 +449,20 @@ export type UserUpdateOneRequiredWithoutContestsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutContestsInput, Prisma.UserUpdateWithoutContestsInput>, Prisma.UserUncheckedUpdateWithoutContestsInput>
 }
 
+export type UserCreateNestedOneWithoutResultsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutResultsInput, Prisma.UserUncheckedCreateWithoutResultsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutResultsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutResultsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutResultsInput, Prisma.UserUncheckedCreateWithoutResultsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutResultsInput
+  upsert?: Prisma.UserUpsertWithoutResultsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutResultsInput, Prisma.UserUpdateWithoutResultsInput>, Prisma.UserUncheckedUpdateWithoutResultsInput>
+}
+
 export type UserCreateNestedOneWithoutFeedbackInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutFeedbackInput, Prisma.UserUncheckedCreateWithoutFeedbackInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutFeedbackInput
@@ -466,6 +487,7 @@ export type UserCreateWithoutContestsInput = {
   groqkey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  Results?: Prisma.ResultCreateNestedManyWithoutUserInput
   feedback?: Prisma.FeedbackCreateNestedManyWithoutUserInput
 }
 
@@ -479,6 +501,7 @@ export type UserUncheckedCreateWithoutContestsInput = {
   groqkey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  Results?: Prisma.ResultUncheckedCreateNestedManyWithoutUserInput
   feedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -508,6 +531,7 @@ export type UserUpdateWithoutContestsInput = {
   groqkey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Results?: Prisma.ResultUpdateManyWithoutUserNestedInput
   feedback?: Prisma.FeedbackUpdateManyWithoutUserNestedInput
 }
 
@@ -521,6 +545,79 @@ export type UserUncheckedUpdateWithoutContestsInput = {
   groqkey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Results?: Prisma.ResultUncheckedUpdateManyWithoutUserNestedInput
+  feedback?: Prisma.FeedbackUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutResultsInput = {
+  id?: string
+  name?: string | null
+  email?: string | null
+  password?: string | null
+  emailVerified?: Date | string | null
+  image?: string | null
+  groqkey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  Contests?: Prisma.ContestCreateNestedManyWithoutCreatedByInput
+  feedback?: Prisma.FeedbackCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutResultsInput = {
+  id?: string
+  name?: string | null
+  email?: string | null
+  password?: string | null
+  emailVerified?: Date | string | null
+  image?: string | null
+  groqkey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  Contests?: Prisma.ContestUncheckedCreateNestedManyWithoutCreatedByInput
+  feedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutResultsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutResultsInput, Prisma.UserUncheckedCreateWithoutResultsInput>
+}
+
+export type UserUpsertWithoutResultsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutResultsInput, Prisma.UserUncheckedUpdateWithoutResultsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutResultsInput, Prisma.UserUncheckedCreateWithoutResultsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutResultsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutResultsInput, Prisma.UserUncheckedUpdateWithoutResultsInput>
+}
+
+export type UserUpdateWithoutResultsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqkey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Contests?: Prisma.ContestUpdateManyWithoutCreatedByNestedInput
+  feedback?: Prisma.FeedbackUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutResultsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groqkey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Contests?: Prisma.ContestUncheckedUpdateManyWithoutCreatedByNestedInput
   feedback?: Prisma.FeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -535,6 +632,7 @@ export type UserCreateWithoutFeedbackInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   Contests?: Prisma.ContestCreateNestedManyWithoutCreatedByInput
+  Results?: Prisma.ResultCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFeedbackInput = {
@@ -548,6 +646,7 @@ export type UserUncheckedCreateWithoutFeedbackInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   Contests?: Prisma.ContestUncheckedCreateNestedManyWithoutCreatedByInput
+  Results?: Prisma.ResultUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFeedbackInput = {
@@ -577,6 +676,7 @@ export type UserUpdateWithoutFeedbackInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contests?: Prisma.ContestUpdateManyWithoutCreatedByNestedInput
+  Results?: Prisma.ResultUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFeedbackInput = {
@@ -590,6 +690,7 @@ export type UserUncheckedUpdateWithoutFeedbackInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contests?: Prisma.ContestUncheckedUpdateManyWithoutCreatedByNestedInput
+  Results?: Prisma.ResultUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -599,11 +700,13 @@ export type UserUncheckedUpdateWithoutFeedbackInput = {
 
 export type UserCountOutputType = {
   Contests: number
+  Results: number
   feedback: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Contests?: boolean | UserCountOutputTypeCountContestsArgs
+  Results?: boolean | UserCountOutputTypeCountResultsArgs
   feedback?: boolean | UserCountOutputTypeCountFeedbackArgs
 }
 
@@ -627,6 +730,13 @@ export type UserCountOutputTypeCountContestsArgs<ExtArgs extends runtime.Types.E
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountResultsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ResultWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountFeedbackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.FeedbackWhereInput
 }
@@ -643,6 +753,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   Contests?: boolean | Prisma.User$ContestsArgs<ExtArgs>
+  Results?: boolean | Prisma.User$ResultsArgs<ExtArgs>
   feedback?: boolean | Prisma.User$feedbackArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -686,6 +797,7 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "emailVerified" | "image" | "groqkey" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Contests?: boolean | Prisma.User$ContestsArgs<ExtArgs>
+  Results?: boolean | Prisma.User$ResultsArgs<ExtArgs>
   feedback?: boolean | Prisma.User$feedbackArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -696,6 +808,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     Contests: Prisma.$ContestPayload<ExtArgs>[]
+    Results: Prisma.$ResultPayload<ExtArgs>[]
     feedback: Prisma.$FeedbackPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1103,6 +1216,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Contests<T extends Prisma.User$ContestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ContestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Results<T extends Prisma.User$ResultsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ResultsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   feedback<T extends Prisma.User$feedbackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$feedbackArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FeedbackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1551,6 +1665,30 @@ export type User$ContestsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.ContestScalarFieldEnum | Prisma.ContestScalarFieldEnum[]
+}
+
+/**
+ * User.Results
+ */
+export type User$ResultsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Result
+   */
+  select?: Prisma.ResultSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Result
+   */
+  omit?: Prisma.ResultOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResultInclude<ExtArgs> | null
+  where?: Prisma.ResultWhereInput
+  orderBy?: Prisma.ResultOrderByWithRelationInput | Prisma.ResultOrderByWithRelationInput[]
+  cursor?: Prisma.ResultWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ResultScalarFieldEnum | Prisma.ResultScalarFieldEnum[]
 }
 
 /**
