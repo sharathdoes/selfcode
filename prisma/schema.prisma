@@ -1,24 +1,24 @@
-// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql" // or "mysql" / "sqlite"
+  provider = "postgresql" 
   url      = env("DATABASE_URL")
 }
+
 model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
-  password      String?   // For credentials login
+  password      String?   
   emailVerified DateTime?
   image         String?
   groqkey       String?   
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   Contests  Contest[]  @relation("Creator")
-
+  Results   Result[] 
   feedback      Feedback[]
 }
 
@@ -31,7 +31,7 @@ model Contest {
   difficulty     String
   startTime      DateTime
   endTime        DateTime
-  duration       Int
+  durationMinutes       Int
   isPublic       Boolean     @default(true)
   passwordHash   String?     
   createdById    String
@@ -41,37 +41,56 @@ model Contest {
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
   results        Result[]
+  contestants     ContestStudent[]
 }
+
+model ContestStudent {
+  id        String   @id @default(cuid())
+  contestId String
+  email     String
+  attempted Boolean  @default(false)
+  startedAt DateTime?
+
+  contest     Contest  @relation(fields: [contestId], references: [id], onDelete: Cascade)
+  @@unique([contestId, email])
+
+}
+
 
 model Problem {
   id               String   @id @default(cuid())
-  contestId        String
-  contest          Contest  @relation(fields: [contestId], references: [id])
+  contestId        String?
+  contest          Contest?  @relation(fields: [contestId], references: [id])
   problemName      String
   topics           String[]
-  difficult        String
+  difficulty       String
   description      String   @db.Text
   returnformat     String?
   examples         Json
+  testcases        Json     
   constraints      String[]
   comments         String[]
   solutions        Json
-  testcases        Json     
   createdAt        DateTime @default(now())
 }
 
 model Result {
-  id          String        @id @default(cuid())
+  id          String   @id @default(cuid())
   contestId   String
-  contest     Contest       @relation(fields: [contestId], references: [id])
-  userId      String?       
-  username    String        
+  userId      String
+  username    String       
   score       Int
   solvedCount Int
-  details     Json?         // per problem verdicts summary
-  submissions Submission[]  // relation to all code submissions
-  createdAt   DateTime      @default(now())
+  details     Json?
+  submissions Submission[]
+  createdAt   DateTime @default(now())
+
+  contest     Contest  @relation(fields: [contestId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+  
+  @@unique([contestId, userId]) 
 }
+
 
 model Submission {
   id          String   @id @default(cuid())
@@ -80,7 +99,7 @@ model Submission {
   problemId   String
   language    String
   code        String   @db.Text
-  status      String   // accepted, wrong_answer, etc.
+  status      String   
   timeTakenMs Int?
   submittedAt DateTime @default(now())
 }
@@ -90,7 +109,7 @@ model Feedback {
   userId    String
   feedback   String   @db.Text
   anonymous Boolean  @default(false)
-  rating   Int?     // e.g., 1 to 5
+  rating   Int?    
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

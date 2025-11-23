@@ -12,14 +12,14 @@ export type Solution = {
 export type ProblemDescription = {
   problemName: string;
   topics: string[];
-  difficult: string;
+  difficulty: string;
   description: string;
   returnformat: string;
-  examples: Example[];
-  testcases:{ input: string; output: string };
+  examples: any;
+  testcases:any;
   constraints: string[];
-  Comments: string[];
-  Solutions: Solution[];
+  comments: string[];
+  solutions: Solution[];
 };
 
 
@@ -32,7 +32,7 @@ export type Contest = {
   startTime: string; 
   endTime: string;   
   durationMinutes: number; 
-  problemPrompts: { text: string }[];
+  problemPrompts: { text : string}[],
   problems: ProblemDescription[]; 
 
   createdBy: {

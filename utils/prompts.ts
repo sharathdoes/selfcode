@@ -4,23 +4,19 @@ YOU MUST RETURN ONLY VALID JSON. NO markdown, NO code blocks, NO explanations.
 Start your response with { and end with }
 
 Use this exact schema:
-{
-  "problemName": "string",
-  "topics": ["string"],
-  "difficult": "Easy" or "Medium" or "Hard",
-  "description": "string",
-  "returnformat": "string",
-  "examples": [
-    {"input": "string", "output": "string", "explanation": "string"}
-  ],
-  "testcases": {"input": "string", "output": "string"},
-  "constraints": ["string"],
-  "Comments": ["string"],
-  "Solutions": [
-    {"language": "Python", "code": "string"},
-    {"language": "Java", "code": "string"}
-  ]
-}
+
+export type ProblemDescription = {
+  problemName: string;
+  topics: string[];
+  difficulty: string;
+  description: string;
+  returnformat: string;
+  examples: { input: string; output: string; explanation: string; };
+  testcases:{ input: string; output: string };
+  constraints: string[];
+  comments: string[];
+  solutions: Solution[];
+};
 
 
 Include 3 examples and at least 2 solutions in different languages & 10 testcases.
