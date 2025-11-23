@@ -66,11 +66,11 @@ model Problem {
   difficulty       String
   description      String   @db.Text
   returnformat     String?
-  examples         Json
-  testcases        Json     
+  examples         Json[]
+  testcases        Json[]     
   constraints      String[]
   comments         String[]
-  solutions        Json
+  solutions        Json[]
   createdAt        DateTime @default(now())
 }
 

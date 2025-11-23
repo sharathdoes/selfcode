@@ -26,10 +26,8 @@ export async function Groq(req: Message[]) {
   const data = await res.json();
 
   if (!res.ok) {
-    // return a plain error object
     return { error: data.error?.message || "Groq API failed" };
   }
 
-  // return a plain object (safe to pass to Client Components)
   return { reply: data.choices?.[0]?.message?.content || "" };
 }

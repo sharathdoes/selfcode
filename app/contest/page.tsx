@@ -16,7 +16,7 @@ import { useState } from "react";
 import { Contest } from "@/utils/types";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {generateContest} from '../../actions/useGroqApi';
+import {generateContest} from '../../actions/pnc';
 function Header({ step }: { step: number }) {
   return <div className="flex items-center justify-center">Step {step} of 6</div>;
 }
