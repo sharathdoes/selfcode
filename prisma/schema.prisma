@@ -18,6 +18,7 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   Contests  Contest[]  @relation("Creator")
+  Problems   Problem[]  @relation("PCreator")
   Results   Result[] 
   feedback      Feedback[]
 }
@@ -70,6 +71,8 @@ model Problem {
   testcases        Json[]     
   constraints      String[]
   comments         String[]
+  createdById    String
+  createdBy      User        @relation(fields: [createdById], references: [id], name: "PCreator")
   solutions        Json[]
   createdAt        DateTime @default(now())
 }

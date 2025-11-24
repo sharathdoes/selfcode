@@ -3,7 +3,7 @@ import {ProblemDescription} from '../utils/types'
 import { GenerateProblem } from "../utils/prompts";
 import { Groq } from "./groq";
 import Prisma from "@/prisma/prisma"
- export async function generateProblem(prompt: string): Promise<ProblemDescription> {
+ export async function generateProblem(prompt:string ): Promise<ProblemDescription> {
   const result = await Groq([
     { role: "system", content: GenerateProblem },
     { role: "user", content: `Generate a problem based on this idea: ${prompt} ` },
@@ -15,7 +15,7 @@ import Prisma from "@/prisma/prisma"
       const parsed = typeof result.reply === "string" 
       ? JSON.parse(result.reply) 
       : result.reply;
-    
+      
     return parsed as ProblemDescription;
 }
 
@@ -105,45 +105,57 @@ import Prisma from "@/prisma/prisma"
     }
   ]
 */
-export async function createAndSaveProblem(prompt:string){
+export async function createAndSaveProblem({prompt,userId}:{prompt:string, userId:string }){
   try{
+     console.log(prompt, userId)
       const problem = await generateProblem(prompt);
-      const savedProblem = await SaveProblem(problem);
+      const savedProblem = await SaveProblem({problem, userId});
       return savedProblem;
   }
   catch(err){
-     console.error("Failed to create problem:", err);
+    console.error("Failed to create problem:", err);
     throw err;
   }
 }
-export async function SaveProblem(data: ProblemDescription) {
+export async function SaveProblem({
+  problem,
+  userId
+}: {
+  problem: ProblemDescription;
+  userId: string;
+}) {
+  if (!userId) throw new Error("userId is required");
+
   try {
-    console.log("here",data)
-    const problem = await Prisma.problem.create({
+    console.log("Saving Problem:", problem);
+
+    const created = await Prisma.problem.create({
       data: {
-        problemName: data.problemName,
-        topics: data.topics,
-        difficulty: data.difficulty,
-        description: data.description,
-        returnformat: data.returnformat,
-        examples: data.examples,
-        testcases: data.testcases,
-        constraints: data.constraints,
-        comments: data.comments,
-        solutions: data.solutions,
-      },
+        problemName: problem.problemName,
+        topics: problem.topics,
+        difficulty: problem.difficulty,
+        description: problem.description,
+        returnformat: problem.returnformat,
+        examples: problem.examples,
+        testcases: problem.testcases,
+        constraints: problem.constraints,
+        comments: problem.comments,
+        solutions: problem.solutions,
+        createdById: userId
+      }
     });
-    return problem;
+
+    return created;
   } catch (error) {
-    console.error("Failed to create problem:", error);
+    console.error("Failed to save problem:", error);
     throw error;
   }
 }
 
-export async function generateContest(prompts:string[]):Promise<ProblemDescription[]>{
-  if(prompts.length===0){
-    return [];
-  }
-  const problems = await Promise.all(prompts.map(p => generateProblem(p)));
-  return problems;
-}
+// export async function generateContest(prompts:string[]):Promise<ProblemDescription[]>{
+//   if(prompts.length===0){
+//     return [];
+//   }
+//   const problems = await Promise.all(prompts.map(p => generateProblem(p)));
+//   return problems;
+// }

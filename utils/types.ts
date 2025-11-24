@@ -8,18 +8,25 @@ export type Solution = {
   language: string;
   code: string;
 };
-
 export type ProblemDescription = {
+  id: string;
   problemName: string;
   topics: string[];
   difficulty: string;
   description: string;
-  returnformat: string;
-  examples: any;
-  testcases:any;
+  returnformat: string | null;
+  examples: any[];           
+  testcases: any[];          
   constraints: string[];
   comments: string[];
-  solutions: Solution[];
+  solutions: any[];        
+  createdBy: {
+    id: string;
+    name: string | null;
+    email: string | null;
+  };                         
+  contestId?: string | null;
+  createdAt: Date;
 };
 
 
