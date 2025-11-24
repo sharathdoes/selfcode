@@ -2,7 +2,7 @@
 import {ProblemDescription} from '../utils/types'
 import { GenerateProblem } from "../utils/prompts";
 import { Groq } from "./groq";
-import Prisma from "@/prisma/prisma"
+import prisma from "@/prisma/prisma"
  export async function generateProblem(prompt:string ): Promise<ProblemDescription> {
   const result = await Groq([
     { role: "system", content: GenerateProblem },
@@ -129,7 +129,7 @@ export async function SaveProblem({
   try {
     console.log("Saving Problem:", problem);
 
-    const created = await Prisma.problem.create({
+    const created = await prisma.problem.create({
       data: {
         problemName: problem.problemName,
         topics: problem.topics,
