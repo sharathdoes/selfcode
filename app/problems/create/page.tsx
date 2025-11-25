@@ -34,9 +34,9 @@ export default function CreateProblem() {
     }
   };
   return (
-    <div className="flex min-h-screen justify-center items-center">
-      <form onSubmit={handleSubmit(submitThis)}>
-        <Textarea {...register("query")}></Textarea>
+    <div className="flex min-h-screen  justify-center items-center">
+      <form  className="w-2xl flex  flex-col gap-4 justify-center items-center " onSubmit={handleSubmit(submitThis)}>
+        <Textarea className="max-w-2xl " {...register("query")}></Textarea>
         <Button type="submit">Submit</Button>
       </form>
     </div>

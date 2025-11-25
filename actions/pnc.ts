@@ -159,3 +159,18 @@ export async function SaveProblem({
 //   const problems = await Promise.all(prompts.map(p => generateProblem(p)));
 //   return problems;
 // }
+
+export async function getAllProblems(){
+  const problems= await prisma.problem.findMany({
+    include:{
+      createdBy:{
+        select:{
+          id:true,
+          name:true,
+          email:true
+        }
+      }
+    }
+  }) ;
+  return problems as ProblemDescription[];
+}
