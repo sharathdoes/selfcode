@@ -12,6 +12,7 @@ import { getProblemById } from "@/actions/pnc";
 
 import {One } from "@/components/editor/one"
 import Two  from "@/components/editor/two"
+import Three  from "@/components/editor/three"
 export default function ProblemById({
   params,
 }: {
@@ -24,15 +25,7 @@ export default function ProblemById({
 
 
 
- function Three() {
-  return (
-    <div className="flex h-full items-center justify-center p-6">
-      <span className="font-semibold">
-        {problem.returnformat}
-        </span>
-    </div>
-  );
-}
+
   const { id } = use(params);
   const [problem, setProblem] = useState<ProblemDescription>({
     id: "",
@@ -79,7 +72,7 @@ export default function ProblemById({
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel defaultSize={75}>
-              <Three />
+              <Three  {...problem}/>
             </ResizablePanel>
           </ResizablePanelGroup>
         </ResizablePanel>

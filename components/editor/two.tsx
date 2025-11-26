@@ -17,7 +17,7 @@ export default function Two() {
   };
 
   return (
-    <div className=" bg-[#1e1e1e] h-full w-full">   {/* FULL SPACE */}
+    <div className="  h-full w-full">   {/* FULL SPACE */}
       <CodeMirror
         value={code}
         height="00%"     // <-- IMPORTANT
