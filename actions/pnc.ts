@@ -152,13 +152,13 @@ export async function SaveProblem({
   }
 }
 
-// export async function generateContest(prompts:string[]):Promise<ProblemDescription[]>{
-//   if(prompts.length===0){
-//     return [];
-//   }
-//   const problems = await Promise.all(prompts.map(p => generateProblem(p)));
-//   return problems;
-// }
+export async function generateContest(prompts:string[]):Promise<ProblemDescription[]>{
+  if(prompts.length===0){
+    return [];
+  }
+  const problems = await Promise.all(prompts.map(p => generateProblem(p)));
+  return problems;
+}
 
 export async function getAllProblems(){
   const problems= await prisma.problem.findMany({
@@ -173,4 +173,21 @@ export async function getAllProblems(){
     }
   }) ;
   return problems as ProblemDescription[];
+}
+export async function getProblemById(id:string){
+  const problems= await prisma.problem.findFirst({
+    where:{
+      id:id
+    },
+    include:{
+      createdBy:{
+        select:{
+          id:true,
+          name:true,
+          email:true
+        }
+      }
+    }
+  }) ;
+  return problems as ProblemDescription;
 }

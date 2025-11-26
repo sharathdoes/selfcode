@@ -16,7 +16,7 @@ import { useState } from "react";
 import { Contest } from "@/utils/types";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-// import {generateContest} from '../../actions/pnc';
+import {generateContest} from '../../actions/pnc';
 function Header({ step }: { step: number }) {
   return <div className="flex items-center justify-center">Step {step} of 6</div>;
 }
@@ -122,22 +122,22 @@ export default function CreateContest() {
     name: "problemPrompts",
   });
 
-// const submitContest = async (data: Contest) => {
-//   console.log("Contest Data: ", data);
+const submitContest = async (data: Contest) => {
+  console.log("Contest Data: ", data);
 
-//   try {
-//     // CALL your Groq AI problem generator (await is IMPORTANT)
-//     const generated = await generateContest(
-//       data.problemPrompts.map((p) => p.text)
-//     );
-//     const parsed = generated.map((p) => (typeof p === "string" ? JSON.parse(p) : p));
+  try {
+    // CALL your Groq AI problem generator (await is IMPORTANT)
+    const generated = await generateContest(
+      data.problemPrompts.map((p) => p.text)
+    );
+    const parsed = generated.map((p) => (typeof p === "string" ? JSON.parse(p) : p));
 
-//     setProb(parsed); // UPDATE UI
-//     console.log("Generated Problems: ", parsed);
-//   } catch (err) {
-//     console.error("Error generating contest problems:", err);
-//   }
-// };
+    setProb(parsed); // UPDATE UI
+    console.log("Generated Problems: ", parsed);
+  } catch (err) {
+    console.error("Error generating contest problems:", err);
+  }
+};
 
   const toggleTopic = (topic: string) => {
     if (selectedTopics.includes(topic)) {
@@ -157,7 +157,7 @@ export default function CreateContest() {
       <div className="w-full max-w-lg p-6 border shadow-lg rounded-md">
         <Header step={step} />
 
-<form >
+<form  onSubmit={((e) =>{  e.preventDefault(); step === 6 && submitContest(formData)})}>
           {step === 1 && (
             <div className="space-y-4 mt-4">
               <div>Enter Contest Name : </div>
