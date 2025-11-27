@@ -154,10 +154,9 @@ const submitContest = async (data: Contest) => {
 
   return (
     <div className="flex min-h-screen justify-center items-center p-2 ">
-      <div className="w-full max-w-lg p-6 border shadow-lg rounded-md">
+      <div className="w-full max-w-lg p-6  rounded-md">
         <Header step={step} />
-
-<form  onSubmit={((e) =>{  e.preventDefault(); step === 6 && submitContest(formData)})}>
+          <form  onSubmit={((e) =>{  e.preventDefault(); step === 6 && submitContest(formData)})}>
           {step === 1 && (
             <div className="space-y-4 mt-4">
               <div>Enter Contest Name : </div>
@@ -359,10 +358,10 @@ const submitContest = async (data: Contest) => {
           </div>
         </form>
         
-      {prob && <div className="mt-4 p-4 border rounded">
+      {/* {prob && <div className="mt-4 p-4 border rounded">
           <h2 className="text-lg font-semibold mb-2">Generated Problems:</h2>
           <pre className="whitespace-pre-wrap">{JSON.stringify(prob, null, 2)}</pre>
-        </div>}
+        </div>} */}
       </div>
     </div>
   );
