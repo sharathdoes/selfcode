@@ -1,6 +1,4 @@
 "use client";
-"@/components/ui/resizable";
-
 import { use } from "react";
 import { ProblemDescription } from "@/utils/types";
 import { useState, useEffect } from "react";
@@ -13,25 +11,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Textarea } from "@/components/ui/textarea";
-
-import type { BundledLanguage } from "@/components/ui/shadcn-io/code-block";
-import {
-  CodeBlock,
-  CodeBlockBody,
-  CodeBlockContent,
-  CodeBlockCopyButton,
-  CodeBlockFilename,
-  CodeBlockFiles,
-  CodeBlockHeader,
-  CodeBlockItem,
-  CodeBlockSelect,
-  CodeBlockSelectContent,
-  CodeBlockSelectItem,
-  CodeBlockSelectTrigger,
-  CodeBlockSelectValue,
-} from "@/components/ui/shadcn-io/code-block";
-import { Button } from "@/components/ui/button";
-
 export default function ProblemById({
   params,
 }: {
@@ -40,6 +19,8 @@ export default function ProblemById({
   }>;
 }) {
   const { id } = use(params);
+  const [langIndex, setLangIndex] = useState(0);
+
   const [problem, setProblem] = useState<ProblemDescription>({
     id: "",
     problemName: "",
@@ -59,12 +40,22 @@ export default function ProblemById({
     },
     createdAt: new Date(),
   });
+  function formatValue(value: any): string {
+    if (Array.isArray(value)) {
+      return `[${value.map(formatValue).join(", ")}]`;
+    }
+    if (typeof value === "object" && value !== null) {
+      return `{ ${Object.entries(value)
+        .map(([k, v]) => `${k}: ${formatValue(v)}`)
+        .join(", ")} }`;
+    }
+    return String(value);
+  }
 
   useEffect(() => {
     const getsProblemById = async () => {
       const problemById = await getProblemById(id);
       setProblem(problemById);
-      console.log("hey", problemById.solutions);
     };
     getsProblemById();
   }, []);
@@ -86,25 +77,41 @@ export default function ProblemById({
           <AccordionItem className="w-full max-w-md" value="item-1">
             <AccordionTrigger>Solution</AccordionTrigger>
             <AccordionContent className="flex flex-col gap-4 text-balance">
-             <div className="relative w-full">
-    <button
-      className="absolute right-2 top-2 text-xs bg-gray-800 text-white px-2 py-1 rounded"
-      onClick={() => navigator.clipboard.writeText(code[0].code)}
-    >
-      Copy
-    </button>
+              <div className="relative w-full">
+                {/* Language Toggle */}
+                <div className="flex gap-2 mb-2">
+                  <button
+                    onClick={() => setLangIndex(0)}
+                    className={`px-3 py-1 rounded text-xs ${
+                      langIndex === 0
+                        ? "bg-blue-700"
+                        : "bg-yellow-500 text-black"
+                    }`}
+                  >
+                    Python
+                  </button>
 
-    <pre className="bg-[#1e1e1e] text-gray-200 p-4 rounded-lg overflow-x-auto text-sm">
-      <code>{code[0].code}</code>
-    </pre>
-  </div>
+                  <button
+                    onClick={() => setLangIndex(1)}
+                    className={`px-3 py-1 rounded text-xs ${
+                      langIndex === 1
+                        ? "bg-blue-700"
+                        : "bg-yellow-500 text-black"
+                    }`}
+                  >
+                    Java
+                  </button>
+                </div>
+                <pre className="bg-[#1e1e1e] text-gray-200 p-4 rounded-lg overflow-x-auto text-sm">
+                  <code>{code[langIndex].code.replace(/\\n/g, "\n")}</code>
+                </pre>
+              </div>
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
-            <AccordionTrigger>Discussions</AccordionTrigger>
+            <AccordionTrigger>Hints</AccordionTrigger>
 
             <AccordionContent className="flex flex-col gap-4 text-balance">
-              <Textarea></Textarea>
               <div className="flex flex-col gap-4">
                 {problem.comments.map((ex, index) => (
                   <div key={index}>
@@ -125,13 +132,13 @@ export default function ProblemById({
         <div className="flex flex-col  gap-2 p-6 border shadow-md">
           <h1 className="font-bold text-xl">{problem.problemName}</h1>
           <div className="flex gap-3">
-            <Badge variant="outline">{problem.difficulty}</Badge>
-            <Badge variant="outline">Companies</Badge>
-            <Badge variant="outline">Topics</Badge>
+            <Badge variant="default">{problem.difficulty}</Badge>
+            <Badge variant="default">Companies</Badge>
+            <Badge variant="default">Topics</Badge>
           </div>
         </div>
         <div className="flex flex-col  text-sm gap-2 p-6 border shadow-md">
-          <p>{problem.description}</p>
+          <p> Description : {problem.description}</p>
           <div className="flex flex-col gap-4">
             {problem.examples.map((ex, index) => (
               <div key={index}>
@@ -140,9 +147,19 @@ export default function ProblemById({
                 </div>
                 <div>
                   <blockquote className=" border-l-2 pl-4 gap-1 flex flex-col">
-                    <p>Input: {ex.input}</p>
-                    <p>Output: {ex.output}</p>
-                    <p>Explanation: {ex.explanation}</p>
+                    <div className="flex">
+                      <span className="font-semibold">Input: </span>
+                      <div className="ml-2 flex flex-wrap gap-2">
+                        {Object.entries(ex.input).map(([key, value]) => (
+                          <span key={key}>
+                            {key}: {formatValue(value)}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <p> Output : {JSON.stringify(ex.output, null, 2)}</p>
+                    <p> Explanation : {ex.explanation}</p>
                   </blockquote>
                 </div>
               </div>
@@ -161,31 +178,51 @@ export default function ProblemById({
       </div>
       <div className=" flex flex-col w-[30%]">
         <div className="flex flex-col gap-2">
-          <Accordion type="multiple" className="w-full p-4  border shadow-md text-sm ">
-          <AccordionItem value="item-1">
-            <AccordionTrigger>Topics</AccordionTrigger>
-            <AccordionContent className="flex  gap-2 text-balance">
-              {
-                problem.topics.map((p)=>{
-                  return (
-                    <Badge variant="default">{p}</Badge>
-                  )
-                })
-              }
-            </AccordionContent>
-          </AccordionItem>
-          
-        </Accordion>
-              
-        <div className="flex flex-col  border shadow-md gap-3 p-4">
-              <h1>Submit Solution</h1>
-              <div className="flex justify-center items-center">               <button className="bg-yellow-400 py-1 px-2 text-black rounded-md">Submit</button>
-</div>
+          <Accordion
+            type="multiple"
+            className="w-full p-4  border shadow-md text-sm "
+          >
+            <AccordionItem value="item-1">
+              <AccordionTrigger className="font-semibold">
+                Topics
+              </AccordionTrigger>
+              <AccordionContent className="flex  gap-2 text-balance">
+                {problem.topics.map((p) => {
+                  return <Badge variant="default">{p}</Badge>;
+                })}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
 
-        </div>
-        <div className="flex flex-col  border shadow-md gap-3 p-4">
-  Input format
-</div>
+          <div className="flex flex-col  border shadow-md gap-3 p-4">
+            <h1 className="font-semibold">Submit Solution</h1>
+            <div className="flex justify-center items-center">
+              {" "}
+              <button className="bg-yellow-400 py-1 px-2 text-black rounded-md">
+                Submit
+              </button>
+            </div>
+          </div>
+          <div className="flex flex-col border shadow-md gap-3 p-4">
+            <p className="font-semibold">Comment Here</p>
+            <Textarea></Textarea>
+            <button className="bg-yellow-400 py-1 px-2 text-black  rounded-md">
+              Post
+            </button>
+          </div>
+          <div className="flex flex-col border shadow-md gap-1 p-4">
+            <span className="font-semibold"> Created By : </span>
+            <div>
+              {" "}
+              <span className="font-semibold"> Name : </span>{" "}
+              {problem.createdBy.name}
+            </div>
+            <p>
+              {" "}
+              <span className="font-semibold"> Email : </span> :{" "}
+              {problem.createdBy.email}
+            </p>
+          </div>
         </div>
       </div>
     </div>

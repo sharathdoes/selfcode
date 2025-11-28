@@ -29,6 +29,27 @@ type PisonReq={
   version:string
 }
 
+/* POST /api/v2/execute
+Content-Type: application/json
+
+{
+  "language": "js",
+  "version": "15.10.0",
+  "files": [
+    {
+      "name": "my_cool_code.js",
+      "content": "console.log(process.argv)"
+    }
+  ],
+  "stdin": "",
+  "args": ["1", "2", "3"],
+  "compile_timeout": 10000,
+  "run_timeout": 3000,
+  "compile_memory_limit": -1,
+  "run_memory_limit": -1
+}
+   */
+
 export default async function Execute({code, language, version}:PisonReq) {
   if(!language || !version || !code) throw new Error("Missing fields");
   const payload={

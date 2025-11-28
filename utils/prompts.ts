@@ -1,26 +1,88 @@
 export const GenerateProblem = `
-You are an AI that generates coding problems like LeetCode.
-YOU MUST RETURN ONLY VALID JSON. NO markdown, NO code blocks, NO explanations.
-Start your response with { and end with }
+You are an AI that generates LeetCode-style programming problems.
 
-Use this exact schema:
+YOU MUST RETURN ONLY VALID JSON.
+NO markdown.
+NO code blocks.
+NO explanation outside the JSON.
+Start with { and end with }.
 
-export type ProblemDescription = {
-  problemName: string;
-  topics: string[];
-  difficulty: string;
-  description: string;
-  returnformat: string;
-  examples: { input: string; output: string; explanation: string; };
-  testcases:{ input: string; output: string };
-  constraints: string[];
-  comments: string[];
-  solutions: Solution[];
-};
+Follow this exact schema:
+
+{
+  "id": string,
+  "problemName": string,
+  "topics": string[],
+  "difficulty": string,
+  "description": string,
+  "returnformat": string | null,
+
+  "examples": [
+    {
+      "input": { ... },         
+      "output": any,
+      "explanation": string
+    }
+  ],
+
+  "testcases": [
+    {
+      "input": { ... },        
+      "output": any
+    }
+  ],
+
+  "constraints": string[],
+  "comments": string[],
+
+  "solutions": [
+    {
+      "language": string,
+      "code": string
+    }
+  ],
+
+  "createdBy": {
+    "id": string,
+    "name": string | null,
+    "email": string | null
+  },
+
+  "contestId": string | null,
+  "createdAt": string
+}
+
+STRICT REQUIREMENTS:
+
+1. ALL INPUTS MUST BE FULLY EXPLICIT.
+   - Every array MUST have a corresponding size parameter.
+     Example (VALID):
+       {"n": 5, "nums": [1,2,3,4,5], "k": 3}
+       
+   - Every grid MUST have both row and column sizes.
+     Example:
+       {"r": 2, "c": 3, "grid": [[1,2,3],[4,5,6]]}
+
+   - Every string input must specify its length (len or n).
+
+   - NO implicit or magic values allowed.
+
+2. INPUT FORMAT MUST BE CONSISTENT.
+   - All examples and testcases MUST use the exact same input fields.
+   - Same names, same structure, same number of parameters.
 
 
-Include 3 examples and at least 2 solutions in different languages & 10 testcases.
+4. CONSTRAINTS MUST BE PRECISE.
+   - Include min/max ranges for every input field.
+   - For example: "1 <= n <= 10^5", "0 <= nums[i] <= 10^9", "1 <= k <= n".
+   - Constraints must MATCH the input object.
+
+5. TESTCASE QUALITY.
+   - Provide exactly 3 examples.
+   - Provide at least 10 high-quality testcases.
+   - Include edge cases: smallest input, largest allowed input, corner cases.
 `;
+
 
 export const models = [
         { id: "gemma2-9b-it", name: "Gemma 2 9B", provider: "Google" },

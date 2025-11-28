@@ -8,6 +8,7 @@ export type Solution = {
   language: string;
   code: string;
 };
+
 export type ProblemDescription = {
   id: string;
   problemName: string;
@@ -15,8 +16,9 @@ export type ProblemDescription = {
   difficulty: string;
   description: string;
   returnformat: string | null;
-  examples: any[];           
-  testcases: any[];          
+  examples: any[];
+  testcases: any[];
+
   constraints: string[];
   comments: string[];
   solutions: any[];        
