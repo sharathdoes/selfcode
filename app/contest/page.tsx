@@ -23,9 +23,6 @@ function Header({ step }: { step: number }) {
 
 export default function CreateContest() {
   const [step, setStep] = useState(1);
-
-
-
   const topics = [
     "Array",
     "String",
@@ -154,7 +151,7 @@ const submitContest = async (data: Contest) => {
 
   return (
     <div className="flex min-h-screen justify-center items-center p-2 ">
-      <div className="w-full max-w-lg p-6  rounded-md">
+      <div className="w-full max-w-lg p-6  border rounded-md">
         <Header step={step} />
           <form  onSubmit={((e) =>{  e.preventDefault(); step === 6 && submitContest(formData)})}>
           {step === 1 && (

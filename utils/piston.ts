@@ -27,6 +27,7 @@ type PisonReq={
   code : string,
   language:string, 
   version:string
+  stdin?:string
 }
 
 /* POST /api/v2/execute
@@ -50,12 +51,13 @@ Content-Type: application/json
 }
    */
 
-export default async function Execute({code, language, version}:PisonReq) {
+export default async function Execute({code, language, version,stdin }:PisonReq) {
   if(!language || !version || !code) throw new Error("Missing fields");
   const payload={
     language:language,
     version:version,
-    files:[{name:filenameFor(language), content:code}]
+    files:[{name:filenameFor(language), content:code}],
+    stdin:stdin || ""
   }
   const body=JSON.stringify(payload);
   try{
@@ -65,9 +67,8 @@ export default async function Execute({code, language, version}:PisonReq) {
       body:body
     });
     if (!res.ok) {
-  throw new Error(`Piston API failed: ${res.statusText}`);
-}
-
+      throw new Error(`Piston API failed: ${res.statusText}`);
+    }
     return res.json();
   }catch(err){
     console.log(err);
